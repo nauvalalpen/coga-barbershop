@@ -27,27 +27,40 @@ class Home extends BaseController
             return redirect()->to('/contact')->withInput()->with('errors', $this->validator->getErrors());
         }
 
-        // --- Email Sending Logic ---
-        $email = \Config\Services::email();
+        $emailService = \Config\Services::email();
 
-        // Set who the email is to
-        $email->setTo('nauvalalpenperdana@gmail.com'); // Ganti dengan email admin Anda
+        $visitorName = $this->request->getPost('name');
+        $visitorEmail = $this->request->getPost('email');
+        $subject = $this->request->getPost('subject');
+        $message = $this->request->getPost('message');
 
-        // Set who the email is from
-        $email->setFrom($this->request->getPost('email'), $this->request->getPost('name'));
+        // --- PERBAIKAN LOGIKA PENGIRIMAN EMAIL ---
 
-        // Set the subject
-        $subject = "[Pesan Kontak] " . $this->request->getPost('subject');
-        $email->setSubject($subject);
+        // 1. Email akan selalu DIKIRIM OLEH akun Anda di .env
+        // $emailService->setFrom('nauvalalpenperdana@gmail.com', 'Coga Barbershop Contact Form'); // Opsional, bisa dihapus karena sudah ada di .env
 
-        // Set the message
-        $email->setMessage($this->request->getPost('message'));
+        // 2. Email DIKIRIM KEPADA Anda (admin)
+        $emailService->setTo('nauvalalpenperdana@gmail.com'); // Ganti dengan email admin Anda
 
-        if ($email->send()) {
+        // 3. (PENTING) Atur Reply-To ke alamat email pengunjung
+        $emailService->setReplyTo($visitorEmail, $visitorName);
+
+        // 4. Buat subjek yang informatif
+        $emailService->setSubject("[Pesan Kontak] " . $subject);
+
+        // 5. Buat isi pesan yang lebih informatif
+        $emailBody = "Anda menerima pesan baru dari formulir kontak:<br><br>" .
+            "<b>Nama:</b> " . esc($visitorName) . "<br>" .
+            "<b>Email:</b> " . esc($visitorEmail) . "<br>" .
+            "<b>Subjek:</b> " . esc($subject) . "<br><br>" .
+            "<b>Pesan:</b><br>" . nl2br(esc($message));
+
+        $emailService->setMessage($emailBody);
+
+        if ($emailService->send()) {
             return redirect()->to('/contact')->with('success', 'Pesan Anda telah berhasil terkirim. Kami akan segera merespons.');
         } else {
-            // You can log the error for debugging
-            log_message('error', $email->printDebugger(['headers']));
+            log_message('error', $emailService->printDebugger(['headers']));
             return redirect()->to('/contact')->withInput()->with('error', 'Gagal mengirim pesan. Silakan coba lagi nanti.');
         }
     }
