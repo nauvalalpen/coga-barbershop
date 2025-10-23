@@ -21,6 +21,10 @@ $routes->get('/kapsters', 'KapsterController::index');
 $routes->get('/layanan', 'LayananController::index');
 $routes->get('/galeri', 'GaleriController::index');
 
+//Contact Us
+$routes->get('/contact', 'Home::contact');
+$routes->post('/contact/send', 'Home::sendMessage');
+
 // Admin & Kapster Routes (Protected)
 $routes->group('dashboard', ['filter' => 'admin'], static function ($routes) {
     $routes->get('/', 'Admin\DashboardController::index');

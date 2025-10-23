@@ -1,4 +1,3 @@
-<!-- app/Views/pelanggan/layanan/index.php -->
 <?= $this->extend('layouts/pelanggan_layout') ?>
 
 <?= $this->section('title') ?>
@@ -8,36 +7,40 @@ Layanan Kami
 <?= $this->section('content') ?>
 <style>
     .services-section {
-        padding: 60px 0;
+        padding: 80px 0;
+        background-color: #000;
+        /* Latar belakang hitam pekat */
     }
 
     .section-title {
         font-size: 3rem;
-        margin-bottom: 40px;
+        margin-bottom: 50px;
         color: #fff;
         letter-spacing: 2px;
     }
 
-    /* Style for the icon cards */
+    /* Style untuk kartu ikon */
     .service-card {
-        background-color: #1a1a1a;
+        background-color: #111;
+        /* Sedikit kontras dari background */
         border: 1px solid #c59d5f;
-        /* Gold border */
+        /* Border emas */
         border-radius: 0;
         padding: 30px;
         text-align: center;
-        transition: transform 0.3s ease;
+        transition: transform 0.3s ease, background-color 0.3s ease;
         height: 100%;
     }
 
     .service-card:hover {
         transform: translateY(-10px);
+        background-color: #1a1a1a;
     }
 
     .service-card .icon {
         font-size: 3rem;
         color: #c59d5f;
-        /* Gold icon */
+        /* Ikon emas */
         margin-bottom: 20px;
     }
 
@@ -53,19 +56,25 @@ Layanan Kami
         color: #a0a0a0;
     }
 
-    /* Style for the price list */
+    /* Style untuk daftar harga */
     .price-list-item {
         display: flex;
         justify-content: space-between;
         align-items: center;
-        border-bottom: 1px dashed #555;
-        padding: 20px 0;
+        border-bottom: 1px dashed #444;
+        /* Garis pemisah lebih soft */
+        padding: 25px 0;
+    }
+
+    .price-list-item:last-child {
+        border-bottom: none;
     }
 
     .price-list-item .service-name h4 {
         margin: 0;
         color: #fff;
         font-size: 1.2rem;
+        font-family: 'Playfair Display', serif;
     }
 
     .price-list-item .service-name p {
@@ -76,19 +85,20 @@ Layanan Kami
 
     .price-list-item .service-price {
         color: #c59d5f;
-        /* Gold price */
+        /* Harga emas */
         font-size: 1.5rem;
         font-weight: bold;
+        font-family: 'Playfair Display', serif;
     }
 
-    /* Discount banner */
+    /* Banner diskon */
     .discount-banner {
         background-color: #c59d5f;
-        /* Gold background */
-        color: #121212;
-        /* Dark text */
+        /* Latar emas */
+        color: #000;
+        /* Teks hitam */
         padding: 50px;
-        margin-top: 60px;
+        margin-top: 80px;
     }
 </style>
 
@@ -97,13 +107,11 @@ Layanan Kami
         <h1 class="section-title playfair-display">SERVICES</h1>
     </div>
 
-    <!-- Section 1: Icon Grid (Example, you can link this to your data if you have icons) -->
-    <div class="row g-4 mb-5">
-        <!-- You can loop through your services here if you add an 'icon' field to your database -->
-        <!-- For now, this is a static example based on your Figma -->
+    <!-- Bagian 1: Grid Ikon Statis (Contoh dari Figma) -->
+    <div class="row g-4 mb-5 justify-content-center">
         <div class="col-md-6 col-lg-4">
             <div class="service-card">
-                <div class="icon">✂️</div> <!-- Replace with actual icon library like Font Awesome if desired -->
+                <div class="icon">✂️</div> <!-- Ganti dengan ikon dari library jika ada -->
                 <h5>Haircut & Beard Trim</h5>
                 <p>A precision haircut followed by a detailed beard trim and shape-up.</p>
             </div>
@@ -122,27 +130,30 @@ Layanan Kami
                 <p>Rejuvenate your skin with our signature facial and a clean shave.</p>
             </div>
         </div>
-        <!-- Add more static cards as needed -->
     </div>
 
-    <!-- Section 2: Dynamic Price List from your Database -->
-    <div class="row justify-content-center">
+    <!-- Bagian 2: Daftar Harga Dinamis dari Database -->
+    <div class="row justify-content-center mt-5 pt-5">
         <div class="col-lg-10">
-            <?php foreach ($layanan as $item): ?>
-                <div class="price-list-item">
-                    <div class="service-name">
-                        <h4><?= esc($item->nama_layanan) ?></h4>
-                        <p><?= esc($item->deskripsi) ?> (Estimasi: <?= esc($item->durasi_menit) ?> Menit)</p>
+            <?php if (!empty($layanan)): ?>
+                <?php foreach ($layanan as $item): ?>
+                    <div class="price-list-item">
+                        <div class="service-name">
+                            <h4><?= esc($item->nama_layanan) ?></h4>
+                            <p><?= esc($item->deskripsi) ?> (Estimasi: <?= esc($item->durasi_menit) ?> Menit)</p>
+                        </div>
+                        <div class="service-price">
+                            Rp<?= number_format($item->harga, 0, ',', '.') ?>
+                        </div>
                     </div>
-                    <div class="service-price">
-                        Rp<?= number_format($item->harga, 0, ',', '.') ?>
-                    </div>
-                </div>
-            <?php endforeach; ?>
+                <?php endforeach; ?>
+            <?php else: ?>
+                <p class="text-center text-white-50">Daftar layanan akan segera tersedia.</p>
+            <?php endif; ?>
         </div>
     </div>
 
-    <!-- Section 3: Discount Banner -->
+    <!-- Bagian 3: Banner Diskon Statis -->
     <div class="discount-banner text-center">
         <h5 class="text-uppercase">This Week's New Product</h5>
         <h2 class="display-4 playfair-display">25% DISCOUNT</h2>
