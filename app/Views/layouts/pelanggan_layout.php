@@ -105,12 +105,58 @@
         }
 
         /* --- Footer --- */
+        /* --- FOOTER BARU DENGAN LATAR BELAKANG PUTIH --- */
         .footer {
-            background-color: var(--light-dark-bg);
-            padding: 40px 0;
-            margin-top: 80px;
-            color: #a0a0a0;
+            background-color: #ffffff;
+            /* Latar belakang putih */
+            padding: 80px 0;
+            color: #555;
+            /* Teks abu-abu gelap */
+        }
+
+        .footer h4 {
+            color: #000;
+            /* Judul hitam */
+            font-family: 'Playfair Display', serif;
+            margin-bottom: 20px;
+            text-transform: uppercase;
+        }
+
+        .footer .footer-intro p {
+            margin-bottom: 30px;
+        }
+
+        .footer .footer-contact-item {
+            display: flex;
+            align-items: flex-start;
+            margin-bottom: 15px;
+        }
+
+        .footer .footer-contact-item .icon {
+            font-size: 1.2rem;
+            color: var(--gold-color);
+            margin-right: 15px;
+            margin-top: 5px;
+        }
+
+        .footer .footer-contact-item h5 {
+            color: #000;
+            /* Judul item hitam */
+            font-size: 1rem;
+            font-weight: bold;
+        }
+
+        .footer .footer-contact-item p {
+            margin: 0;
+        }
+
+        .footer .copyright {
             text-align: center;
+            padding-top: 40px;
+            margin-top: 40px;
+            border-top: 1px solid #eee;
+            font-size: 0.9rem;
+            color: #888;
         }
     </style>
 </head>
@@ -172,9 +218,58 @@
         <?= $this->renderSection('content') ?>
     </main>
 
+    <!-- FOOTER BARU -->
     <footer class="footer">
         <div class="container">
-            <p>&copy; <?= date('Y') ?> Coga Barbershop. All Rights Reserved.</p>
+            <div class="row">
+                <div class="col-lg-5 footer-intro">
+                    <h4>CONTACT US</h4>
+                    <p>Duis pretium gravida enim, vel maximus ligula fermentum a. Sed rhoncus eget ex id egestas. Nam nec nisl placerat, tempus erat a, condimentum metusurabitur nulla nisl.</p>
+                </div>
+                <div class="col-lg-7">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="footer-contact-item">
+                                <div class="icon"><i class="fas fa-map-marker-alt"></i></div>
+                                <div>
+                                    <h5>Address</h5>
+                                    <p>304 North Cardinal St, Dorchester<br>Center, MA 02124</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="footer-contact-item">
+                                <div class="icon"><i class="fas fa-envelope"></i></div>
+                                <div>
+                                    <h5>Email</h5>
+                                    <p>info@company.com</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="footer-contact-item">
+                                <div class="icon"><i class="fas fa-phone"></i></div>
+                                <div>
+                                    <h5>Phone</h5>
+                                    <p>(+63) 555 1212</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="footer-contact-item">
+                                <div class="icon"><i class="fas fa-clock"></i></div>
+                                <div>
+                                    <h5>Working Hours</h5>
+                                    <p>Mon - Fri: 10am - 6pm<br>Sat - Sun: 10am - 6pm</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="copyright">
+                &copy; Copyright Coga Barbershop <?= date('Y') ?>
+            </div>
         </div>
     </footer>
 

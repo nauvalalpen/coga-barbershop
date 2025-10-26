@@ -1,11 +1,11 @@
 <?= $this->extend('layouts/pelanggan_layout') ?>
 
 <?= $this->section('title') ?>
-Our Barbers
+Our Kapsters
 <?= $this->endSection() ?>
 
 <?= $this->section('page_header') ?>
-OUR BARBERS
+KAPSTERS
 <?= $this->endSection() ?>
 
 <?= $this->section('content') ?>
@@ -122,7 +122,7 @@ OUR BARBERS
         <div class="row">
             <div class="col-lg-12 text-center section-header">
                 <p class="sub-title">MEET THE FAMILY</p>
-                <h1 class="main-title">OUR BARBERS</h1>
+                <h1 class="main-title">OUR KAPSTERS</h1>
             </div>
         </div>
 

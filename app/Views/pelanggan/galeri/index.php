@@ -3,6 +3,9 @@
 <?= $this->section('title') ?>
 Blog & Berita
 <?= $this->endSection() ?>
+<?= $this->section('page_header') ?>
+GALLERY
+<?= $this->endSection() ?>
 
 <?= $this->section('content') ?>
 <style>
@@ -113,7 +116,7 @@ Blog & Berita
         <!-- Header Section -->
         <div class="row">
             <div class="col-lg-12 text-center section-header">
-                <p class="sub-title">OUR BLOG</p>
+                <p class="sub-title">OUR GALLERY</p>
                 <h1 class="main-title">LATEST NEWS</h1>
             </div>
         </div>

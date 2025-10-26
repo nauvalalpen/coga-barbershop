@@ -4,92 +4,105 @@
 Login
 <?= $this->endSection() ?>
 
+<?= $this->section('page_header') ?>
+MEMBER LOGIN
+<?= $this->endSection() ?>
+
 <?= $this->section('content') ?>
 <style>
-    /* You can keep page-specific styles here */
-    .container {
-        max-width: 400px;
-        margin: 50px auto;
-        padding: 20px;
-        border: 1px solid #ccc;
-        border-radius: 5px;
+    .auth-section {
+        padding: 80px 0;
+        background-color: #000;
     }
 
-    .form-group {
-        margin-bottom: 15px;
+    .auth-form-container {
+        max-width: 450px;
+        margin: auto;
+        background-color: var(--light-dark-bg);
+        padding: 40px;
+        border: 1px solid #222;
     }
 
-    label {
-        display: block;
-        margin-bottom: 5px;
+    .auth-form-container h2 {
+        font-family: 'Playfair Display', serif;
+        color: #fff;
+        text-align: center;
+        margin-bottom: 30px;
     }
 
-    input {
-        width: 100%;
-        padding: 8px;
-        box-sizing: border-box;
+    .form-control {
+        background-color: #333;
+        border: 1px solid #555;
+        border-radius: 0;
+        padding: 0.75rem 1rem;
+        color: #fff;
     }
 
-    button {
-        padding: 10px 15px;
-        background-color: #007bff;
-        color: white;
+    .form-control:focus {
+        background-color: #444;
+        border-color: var(--gold-color);
+        box-shadow: none;
+        color: #fff;
+    }
+
+    .btn-submit {
+        background-color: var(--gold-color);
+        color: #000;
         border: none;
-        cursor: pointer;
+        border-radius: 0;
+        padding: 0.75rem;
+        font-weight: bold;
+        text-transform: uppercase;
+        width: 100%;
+        transition: background-color 0.3s;
     }
 
-    .alert {
-        padding: 15px;
-        margin-bottom: 20px;
-        border: 1px solid transparent;
-        border-radius: 4px;
+    .btn-submit:hover {
+        background-color: #fff;
     }
 
-    .alert-danger {
-        color: #a94442;
-        background-color: #f2dede;
-        border-color: #ebccd1;
+    .auth-link {
+        text-align: center;
+        margin-top: 20px;
+        color: #a0a0a0;
     }
 
-    .alert-success {
-        color: #3c763d;
-        background-color: #dff0d8;
-        border-color: #d6e9c6;
+    .auth-link a {
+        color: var(--gold-color);
+        text-decoration: none;
     }
 </style>
 
-<div class="container">
-    <h2>Login</h2>
+<div class="auth-section">
+    <div class="container">
+        <div class="auth-form-container">
+            <h2>Login</h2>
 
-    <!-- Display feedback messages -->
-    <?php if (session()->get('success')): ?>
-        <div class="alert alert-success"><?= session()->get('success') ?></div>
-    <?php endif; ?>
-    <?php if (session()->get('error')): ?>
-        <div class="alert alert-danger"><?= session()->get('error') ?></div>
-    <?php endif; ?>
-    <?php if (session()->get('errors')): ?>
-        <div class="alert alert-danger">
-            <ul>
-                <?php foreach (session()->get('errors') as $error) : ?>
-                    <li><?= esc($error) ?></li>
-                <?php endforeach ?>
-            </ul>
-        </div>
-    <?php endif ?>
+            <!-- Display feedback messages -->
+            <?php if (session()->get('success')): ?> <div class="alert alert-success"><?= session()->get('success') ?></div> <?php endif; ?>
+            <?php if (session()->get('error')): ?> <div class="alert alert-danger"><?= session()->get('error') ?></div> <?php endif; ?>
+            <?php if (session()->get('errors')): ?>
+                <div class="alert alert-danger">
+                    <?php foreach (session()->get('errors') as $error) : ?>
+                        <p class="mb-0"><?= esc($error) ?></p>
+                    <?php endforeach ?>
+                </div>
+            <?php endif ?>
 
-    <form action="/login" method="post">
-        <?= csrf_field() ?>
-        <div class="form-group">
-            <label for="email">Email</label>
-            <input type="email" name="email" id="email" value="<?= old('email') ?>" required>
+            <form action="/login" method="post">
+                <?= csrf_field() ?>
+                <div class="mb-3">
+                    <label for="email" class="form-label">Email</label>
+                    <input type="email" class="form-control" name="email" id="email" value="<?= old('email') ?>" required>
+                </div>
+                <div class="mb-4">
+                    <label for="password" class="form-label">Password</label>
+                    <input type="password" class="form-control" name="password" id="password" required>
+                </div>
+                <button type="submit" class="btn btn-submit">Login</button>
+            </form>
+            <p class="auth-link">Belum punya akun? <a href="/register">Daftar di sini</a></p>
         </div>
-        <div class="form-group">
-            <label for="password">Password</label>
-            <input type="password" name="password" id="password" required>
-        </div>
-        <button type="submit">Login</button>
-    </form>
-    <p>Belum punya akun? <a href="/register">Daftar di sini</a></p>
+    </div>
 </div>
 <?= $this->endSection() ?>

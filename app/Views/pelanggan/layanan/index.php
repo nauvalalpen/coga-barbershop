@@ -3,6 +3,9 @@
 <?= $this->section('title') ?>
 Layanan Kami
 <?= $this->endSection() ?>
+<?= $this->section('page_header') ?>
+SERVICES
+<?= $this->endSection() ?>
 
 <?= $this->section('content') ?>
 <style>
