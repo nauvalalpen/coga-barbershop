@@ -8,18 +8,17 @@ use App\Models\GaleriModel;
 class GaleriController extends BaseController
 {
     /**
-     * Display a list of all gallery items for the admin.
+     * Menampilkan daftar item galeri.
      */
     public function index()
     {
         $galeriModel = new GaleriModel();
         $data['galeri'] = $galeriModel->findAll();
-
         return view('admin/galeri/index', $data);
     }
 
     /**
-     * Show the form for uploading a new gallery image.
+     * Menampilkan view form 'create' (sebagai potongan HTML untuk modal).
      */
     public function new()
     {
@@ -27,35 +26,38 @@ class GaleriController extends BaseController
     }
 
     /**
-     * Process the upload of a new gallery image.
+     * Memproses data dari form 'create'.
      */
     public function create()
     {
         $rules = [
-            'judul' => 'required',
+            'judul'  => 'required',
             'gambar' => 'uploaded[gambar]|max_size[gambar,2048]|is_image[gambar]',
         ];
 
         if (! $this->validate($rules)) {
+            // Jika validasi gagal, kembalikan ke halaman index.
+            // Modal perlu dibuka manual lagi oleh user.
             return redirect()->back()->withInput()->with('errors', $this->validator->getErrors());
         }
 
-        // Handle file upload
         $gambar = $this->request->getFile('gambar');
         $namaGambar = $gambar->getRandomName();
         $gambar->move('uploads/galeri', $namaGambar);
 
-        // Save to database
         $galeriModel = new GaleriModel();
         $galeriModel->save([
             'judul'      => $this->request->getPost('judul'),
             'deskripsi'  => $this->request->getPost('deskripsi'),
-            'url_gambar' => $namaGambar, // Save the filename
+            'url_gambar' => $namaGambar,
         ]);
 
-        return redirect()->to('/admin/galeri')->with('success', 'Gambar baru berhasil ditambahkan ke galeri.');
+        return redirect()->to('/admin/galeri')->with('success', 'Gambar baru berhasil ditambahkan.');
     }
 
+    /**
+     * Menampilkan view form 'edit' (sebagai potongan HTML untuk modal).
+     */
     public function edit($id)
     {
         $galeriModel = new GaleriModel();
@@ -69,13 +71,11 @@ class GaleriController extends BaseController
     }
 
     /**
-     * Process the update of a gallery item.
+     * Memproses data dari form 'edit'.
      */
     public function update($id)
     {
-        $rules = [
-            'judul' => 'required',
-        ];
+        $rules = ['judul' => 'required'];
 
         if (! $this->validate($rules)) {
             return redirect()->back()->withInput()->with('errors', $this->validator->getErrors());
@@ -83,34 +83,26 @@ class GaleriController extends BaseController
 
         $galeriModel = new GaleriModel();
         $galeriModel->update($id, [
-            'judul'      => $this->request->getPost('judul'),
-            'deskripsi'  => $this->request->getPost('deskripsi'),
+            'judul'     => $this->request->getPost('judul'),
+            'deskripsi' => $this->request->getPost('deskripsi'),
         ]);
 
         return redirect()->to('/admin/galeri')->with('success', 'Informasi gambar berhasil diperbarui.');
     }
 
     /**
-     * Delete a gallery item.
+     * Menghapus item galeri.
      */
     public function delete($id)
     {
         $galeriModel = new GaleriModel();
         $item = $galeriModel->find($id);
-
         if ($item) {
-            // Delete the image file from the server
             $filePath = 'uploads/galeri/' . $item->url_gambar;
-            if (file_exists($filePath)) {
-                unlink($filePath);
-            }
-
-            // Delete the record from the database
+            if (file_exists($filePath)) unlink($filePath);
             $galeriModel->delete($id);
-
-            return redirect()->to('/admin/galeri')->with('success', 'Gambar berhasil dihapus dari galeri.');
+            return redirect()->to('/admin/galeri')->with('success', 'Gambar berhasil dihapus.');
         }
-
         return redirect()->to('/admin/galeri')->with('error', 'Item galeri tidak ditemukan.');
     }
 }

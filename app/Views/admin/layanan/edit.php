@@ -1,50 +1,30 @@
-<!-- app/Views/admin/layanan/edit.php -->
-<?= $this->extend('layouts/admin_layout') ?>
-
-<?= $this->section('title') ?>
-Edit Layanan
-<?= $this->endSection() ?>
-
-<?= $this->section('page_title') ?>
-Edit Layanan: <?= esc($layanan->nama_layanan) ?>
-<?= $this->endSection() ?>
-
-<?= $this->section('content') ?>
-<!-- Display validation errors -->
-<?php if (session()->get('errors')): ?>
-    <div style="color: red; margin-bottom: 20px;">
-        <strong>Error:</strong>
-        <ul>
-            <?php foreach (session()->get('errors') as $error) : ?>
-                <li><?= esc($error) ?></li>
-            <?php endforeach ?>
-        </ul>
-    </div>
-<?php endif ?>
-
+<!-- TIDAK ADA extend() ATAU section() LAGI -->
+<div class="modal-header" style="border-bottom: 1px solid var(--border-color);">
+    <h5 class="modal-title">Edit Layanan: <?= esc($layanan->nama_layanan) ?></h5>
+    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+</div>
 <form action="/admin/layanan/update/<?= $layanan->id ?>" method="post">
-    <?= csrf_field() ?>
+    <div class="modal-body">
+        <?= csrf_field() ?>
+        <?php if (session()->get('errors')): ?>
+            <div class="alert alert-danger">
+                <?php foreach (session()->get('errors') as $error) : ?><p class="mb-0"><?= esc($error) ?></p><?php endforeach ?>
+            </div>
+        <?php endif ?>
 
-    <div style="margin-bottom:15px;">
-        <label>Nama Layanan</label>
-        <input type="text" name="nama_layanan" value="<?= old('nama_layanan', $layanan->nama_layanan) ?>" required style="width:100%; padding:8px;">
+        <div class="mb-3"><label for="nama_layanan" class="form-label">Nama Layanan</label><input type="text" class="form-control" name="nama_layanan" value="<?= old('nama_layanan', $layanan->nama_layanan) ?>" required></div>
+        <div class="row">
+            <div class="col-md-6 mb-3"><label for="harga" class="form-label">Harga</label>
+                <div class="input-group"><span class="input-group-text">Rp</span><input type="number" class="form-control" name="harga" value="<?= old('harga', $layanan->harga) ?>" required></div>
+            </div>
+            <div class="col-md-6 mb-3"><label for="durasi_menit" class="form-label">Durasi (menit)</label>
+                <div class="input-group"><input type="number" class="form-control" name="durasi_menit" value="<?= old('durasi_menit', $layanan->durasi_menit) ?>" required><span class="input-group-text">Menit</span></div>
+            </div>
+        </div>
+        <div class="mb-3"><label for="deskripsi" class="form-label">Deskripsi</label><textarea class="form-control" name="deskripsi" rows="3"><?= old('deskripsi', $layanan->deskripsi) ?></textarea></div>
     </div>
-
-    <div style="margin-bottom:15px;">
-        <label>Harga (contoh: 50000)</label>
-        <input type="number" name="harga" value="<?= old('harga', $layanan->harga) ?>" required style="width:100%; padding:8px;">
+    <div class="modal-footer" style="border-top: 1px solid var(--border-color);">
+        <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">Batal</button>
+        <button type="submit" class="btn btn-warning">Update Layanan</button>
     </div>
-
-    <div style="margin-bottom:15px;">
-        <label>Durasi (dalam menit)</label>
-        <input type="number" name="durasi_menit" value="<?= old('durasi_menit', $layanan->durasi_menit) ?>" required style="width:100%; padding:8px;">
-    </div>
-
-    <div style="margin-bottom:15px;">
-        <label>Deskripsi (Opsional)</label>
-        <textarea name="deskripsi" style="width:100%; height:80px; padding:8px;"><?= old('deskripsi', $layanan->deskripsi) ?></textarea>
-    </div>
-
-    <button type="submit" style="margin-top:20px;">Update Layanan</button>
 </form>
-<?= $this->endSection() ?>

@@ -4,11 +4,13 @@ namespace App\Controllers\Admin;
 
 use App\Controllers\BaseController;
 use App\Models\LayananModel;
+// validator
+
 
 class LayananController extends BaseController
 {
     /**
-     * Display a list of all services for the admin.
+     * Menampilkan halaman daftar layanan utama.
      */
     public function index()
     {
@@ -19,15 +21,16 @@ class LayananController extends BaseController
     }
 
     /**
-     * Show the form for creating a new service.
+     * Menampilkan view form 'create' (sebagai potongan HTML untuk modal).
      */
     public function new()
     {
+        // Metode ini hanya merender file view parsial, tanpa layout.
         return view('admin/layanan/create');
     }
 
     /**
-     * Process the creation of a new service.
+     * Memproses data dari form 'create'.
      */
     public function create()
     {
@@ -38,6 +41,8 @@ class LayananController extends BaseController
         ];
 
         if (! $this->validate($rules)) {
+            // Jika validasi gagal, kembalikan ke halaman index dengan error.
+            // Sayangnya, dengan pendekatan ini, modal tidak akan terbuka otomatis.
             return redirect()->back()->withInput()->with('errors', $this->validator->getErrors());
         }
 
@@ -53,7 +58,7 @@ class LayananController extends BaseController
     }
 
     /**
-     * Show the form for editing a specific service.
+     * Menampilkan view form 'edit' (sebagai potongan HTML untuk modal).
      */
     public function edit($id)
     {
@@ -64,11 +69,12 @@ class LayananController extends BaseController
             throw new \CodeIgniter\Exceptions\PageNotFoundException('Layanan tidak ditemukan.');
         }
 
+        // Metode ini hanya merender file view parsial, tanpa layout.
         return view('admin/layanan/edit', $data);
     }
 
     /**
-     * Process the update of a specific service.
+     * Memproses data dari form 'edit'.
      */
     public function update($id)
     {
@@ -94,13 +100,12 @@ class LayananController extends BaseController
     }
 
     /**
-     * Delete a service.
+     * Menghapus sebuah layanan.
      */
     public function delete($id)
     {
         $layananModel = new LayananModel();
         $layananModel->delete($id);
-
         return redirect()->to('/admin/layanan')->with('success', 'Layanan berhasil dihapus.');
     }
 }

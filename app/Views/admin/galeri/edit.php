@@ -1,45 +1,25 @@
-<!-- app/Views/admin/galeri/edit.php -->
-<?= $this->extend('layouts/admin_layout') ?>
-
-<?= $this->section('title') ?>
-Edit Item Galeri
-<?= $this->endSection() ?>
-
-<?= $this->section('page_title') ?>
-Edit Item Galeri
-<?= $this->endSection() ?>
-
-<?= $this->section('content') ?>
-<!-- Display validation errors -->
-<?php if (session()->get('errors')): ?>
-    <div style="color: red; margin-bottom: 20px;">
-        <strong>Error:</strong>
-        <ul>
-            <?php foreach (session()->get('errors') as $error) : ?>
-                <li><?= esc($error) ?></li>
-            <?php endforeach ?>
-        </ul>
-    </div>
-<?php endif ?>
-
+<div class="modal-header" style="border-bottom: 1px solid var(--border-color);">
+    <h5 class="modal-title">Edit Informasi Gambar</h5>
+    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+</div>
 <form action="/admin/galeri/update/<?= $item->id ?>" method="post">
-    <?= csrf_field() ?>
+    <div class="modal-body">
+        <?= csrf_field() ?>
+        <?php if (session()->get('errors')): ?>
+            <div class="alert alert-danger">
+                <?php foreach (session()->get('errors') as $error) : ?><p class="mb-0"><?= esc($error) ?></p><?php endforeach ?>
+            </div>
+        <?php endif ?>
 
-    <div style="margin-bottom:20px;">
-        <p>Gambar Saat Ini:</p>
-        <img src="/uploads/galeri/<?= esc($item->url_gambar) ?>" alt="<?= esc($item->judul) ?>" width="200" style="border: 1px solid #ccc; padding: 5px;">
+        <div class="text-center mb-3">
+            <img src="/uploads/galeri/<?= esc($item->url_gambar) ?>" alt="<?= esc($item->judul) ?>" style="max-width: 200px;">
+        </div>
+
+        <div class="mb-3"><label for="judul" class="form-label">Judul Gambar</label><input type="text" class="form-control" name="judul" value="<?= old('judul', $item->judul) ?>" required></div>
+        <div class="mb-3"><label for="deskripsi" class="form-label">Deskripsi</label><textarea class="form-control" name="deskripsi" rows="3"><?= old('deskripsi', $item->deskripsi) ?></textarea></div>
     </div>
-
-    <div style="margin-bottom:15px;">
-        <label>Judul Gambar</label>
-        <input type="text" name="judul" value="<?= old('judul', $item->judul) ?>" required style="width:100%; padding:8px;">
+    <div class="modal-footer" style="border-top: 1px solid var(--border-color);">
+        <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">Batal</button>
+        <button type="submit" class="btn btn-warning">Update Informasi</button>
     </div>
-
-    <div style="margin-bottom:15px;">
-        <label>Deskripsi (Opsional)</label>
-        <textarea name="deskripsi" style="width:100%; height:80px; padding:8px;"><?= old('deskripsi', $item->deskripsi) ?></textarea>
-    </div>
-
-    <button type="submit" style="margin-top:20px;">Update Informasi</button>
 </form>
-<?= $this->endSection() ?>

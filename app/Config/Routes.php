@@ -43,6 +43,7 @@ $routes->group('admin', ['filter' => 'admin'], static function ($routes) {
     //Layanan Routes
     $routes->get('layanan', 'Admin\LayananController::index');
     $routes->get('layanan/new', 'Admin\LayananController::new');
+    $routes->get('layanan/fetch/(:num)', 'Admin\LayananController::fetch/$1');
     $routes->post('layanan/create', 'Admin\LayananController::create');
     $routes->get('layanan/edit/(:num)', 'Admin\LayananController::edit/$1');
     $routes->post('layanan/update/(:num)', 'Admin\LayananController::update/$1');
