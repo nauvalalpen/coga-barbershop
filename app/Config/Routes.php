@@ -25,6 +25,12 @@ $routes->get('/galeri', 'GaleriController::index');
 $routes->get('/contact', 'Home::contact');
 $routes->post('/contact/send', 'Home::sendMessage');
 
+$routes->group('', ['filter' => 'auth'], static function ($routes) {
+    $routes->get('booking/new', 'BookingController::new');
+    $routes->post('booking/create', 'BookingController::create');
+    $routes->get('my-bookings', 'BookingController::index');
+});
+
 // Admin & Kapster Routes (Protected)
 $routes->group('dashboard', ['filter' => 'admin'], static function ($routes) {
     $routes->get('/', 'Admin\DashboardController::index');
@@ -39,6 +45,10 @@ $routes->group('admin', ['filter' => 'admin'], static function ($routes) {
     $routes->get('kapsters/edit/(:num)', 'Admin\KapsterController::edit/$1');
     $routes->post('kapsters/update/(:num)', 'Admin\KapsterController::update/$1');
     $routes->post('kapsters/delete/(:num)', 'Admin\KapsterController::delete/$1');
+
+    //Booking Routes
+    $routes->get('bookings', 'Admin\BookingController::index');
+    $routes->post('bookings/update-status/(:num)', 'Admin\BookingController::updateStatus/$1');
 
     //Layanan Routes
     $routes->get('layanan', 'Admin\LayananController::index');

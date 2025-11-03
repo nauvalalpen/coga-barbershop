@@ -201,7 +201,7 @@
                             </li>
                         <?php else: ?>
                             <li class="nav-item">
-                                <a href="/login" class="btn btn-book">Book Appointment</a>
+                                <a href="/booking/newa" class="btn btn-book">Book Appointment</a>
                             </li>
                         <?php endif; ?>
                     </ul>
