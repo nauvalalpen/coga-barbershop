@@ -195,13 +195,14 @@
                                     <i class="fas fa-user"></i> <?= esc(session()->get('nama')) ?>
                                 </a>
                                 <ul class="dropdown-menu">
+                                    <li><a class="dropdown-item" href="/my-bookings">My Bookings</a></li>
                                     <li><a class="dropdown-item" href="#">Profil Saya</a></li>
                                     <li><a class="dropdown-item" href="/logout">Logout</a></li>
                                 </ul>
                             </li>
                         <?php else: ?>
                             <li class="nav-item">
-                                <a href="/booking/newa" class="btn btn-book">Book Appointment</a>
+                                <a href="/booking/new" class="btn btn-book">Book Appointment</a>
                             </li>
                         <?php endif; ?>
                     </ul>

@@ -28,7 +28,7 @@ class AuthFilter implements FilterInterface
         // Check if the user is logged in
         if (! session()->get('isLoggedIn')) {
             // Let's see what the session contains when it fails
-            dd(session()->get(), "AuthFilter: Access DENIED. User not logged in. Redirecting to /login.");
+            // dd(session()->get(), "AuthFilter: Access DENIED. User not logged in. Redirecting to /login.");
 
             return redirect()->to('/login');
         }
