@@ -142,7 +142,7 @@ KAPSTERS
                                         <a href="#"><i class="fab fa-twitter"></i></a>
                                         <a href="#"><i class="fab fa-instagram"></i></a>
                                     </div>
-                                    <a href="/login" class="btn btn-book-kapster">Book</a>
+                                    <a href="/booking/new?kapster_id=<?= $kapster->id ?>" class="btn btn-book-kapster">Book</a>
                                 </div>
                             </div>
                         </div>

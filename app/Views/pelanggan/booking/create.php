@@ -14,7 +14,17 @@
                     <form action="/booking/create" method="post">
                         <?= csrf_field() ?>
                         <div class="mb-3"><label class="form-label">Pilih Layanan</label><select name="layanan_id" class="form-select"><?php foreach ($layanans as $l): ?><option value="<?= $l->id ?>"><?= esc($l->nama_layanan) ?> (Rp<?= number_format($l->harga) ?>)</option><?php endforeach; ?></select></div>
-                        <div class="mb-3"><label class="form-label">Pilih Kapster</label><select name="kapster_id" class="form-select"><?php foreach ($kapsters as $k): ?><option value="<?= $k->id ?>"><?= esc($k->nama) ?></option><?php endforeach; ?></select></div>
+                        <div class="mb-3">
+                            <label class="form-label">Pilih Kapster</label>
+                            <select name="kapster_id" class="form-select">
+                                <option value="">-- Pilih Kapster --</option>
+                                <?php foreach ($kapsters as $k): ?>
+                                    <option value="<?= $k->id ?>" <?= ($selected_kapster_id == $k->id) ? 'selected' : '' ?>>
+                                        <?= esc($k->nama) ?>
+                                    </option>
+                                <?php endforeach; ?>
+                            </select>
+                        </div>
                         <div class="row">
                             <div class="col-md-6 mb-3"><label class="form-label">Tanggal Booking</label><input type="date" name="tanggal_booking" class="form-control"></div>
                             <div class="col-md-6 mb-3"><label class="form-label">Jam Booking</label><input type="time" name="jam_booking" class="form-control"></div>

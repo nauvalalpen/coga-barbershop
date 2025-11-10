@@ -19,10 +19,18 @@ class BookingController extends BaseController
     // Untuk Pelanggan: Menampilkan form booking
     public function new()
     {
-        $layananModel = new LayananModel();
-        $kapsterModel = new KapsterModel();
-        $data['layanans'] = $layananModel->findAll();
-        $data['kapsters'] = $kapsterModel->getKapstersWithUserDetails();
+        $layananModel = new \App\Models\LayananModel();
+        $kapsterModel = new \App\Models\KapsterModel();
+
+        // Ambil kapster_id dari URL, jika ada.
+        $selectedKapsterId = $this->request->getGet('kapster_id');
+
+        $data = [
+            'layanans'           => $layananModel->findAll(),
+            'kapsters'           => $kapsterModel->getKapstersWithUserDetails(),
+            'selected_kapster_id' => $selectedKapsterId // Kirim ID kapster yang dipilih ke view
+        ];
+
         return view('pelanggan/booking/create', $data);
     }
 
