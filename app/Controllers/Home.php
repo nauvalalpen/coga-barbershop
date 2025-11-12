@@ -17,15 +17,25 @@ class Home extends BaseController
     public function sendMessage()
     {
         $rules = [
-            'name'    => 'required',
-            'email'   => 'required|valid_email',
-            'subject' => 'required',
-            'message' => 'required',
+            'name'    => ['label' => 'Nama', 'rules' => 'required'],
+            'email'   => ['label' => 'Email', 'rules' => 'required|valid_email'],
+            'subject' => ['label' => 'Subjek', 'rules' => 'required'],
+            'message' => ['label' => 'Pesan', 'rules' => 'required'],
         ];
 
-        if (! $this->validate($rules)) {
+        $messages = [
+            'email' => [
+                'valid_email' => 'Mohon masukkan alamat email yang valid.'
+            ]
+        ];
+
+        if (! $this->validate($rules, $messages)) { // Kirim pesan kustom ke validator
             return redirect()->to('/contact')->withInput()->with('errors', $this->validator->getErrors());
         }
+
+        // if (! $this->validate($rules)) {
+        //     return redirect()->to('/contact')->withInput()->with('errors', $this->validator->getErrors());
+        // }
 
         $emailService = \Config\Services::email();
 

@@ -127,11 +127,10 @@ CONTACT US
                     <?php endif; ?>
                     <?php if (session()->get('errors')): ?>
                         <div class="alert alert-danger">
-                            <ul>
-                                <?php foreach (session()->get('errors') as $error) : ?>
-                                    <li><?= esc($error) ?></li>
-                                <?php endforeach ?>
-                            </ul>
+                            <!-- Mengubah dari <ul> menjadi paragraf agar lebih rapi -->
+                            <?php foreach (session()->get('errors') as $error) : ?>
+                                <p class="mb-0"><?= esc($error) ?></p>
+                            <?php endforeach ?>
                         </div>
                     <?php endif; ?>
 
