@@ -37,6 +37,8 @@ class BookingController extends BaseController
     // Untuk Pelanggan: Memproses booking baru
     // app/Controllers/BookingController.php
 
+    // app/Controllers/BookingController.php
+
     public function create()
     {
         $rules = [
@@ -56,9 +58,21 @@ class BookingController extends BaseController
         $tanggal = $this->request->getPost('tanggal_booking');
         $jam = $this->request->getPost('jam_booking');
 
-        // --- LOGIKA VALIDASI JADWAL ---
+        // --- VALIDASI BARU: MENCEGAH BOOKING WAKTU LAMPAU ---
 
-        // 1. Dapatkan durasi layanan yang dipilih
+        // Gabungkan tanggal dan jam menjadi satu string datetime
+        $waktuBooking = $tanggal . ' ' . $jam;
+
+        // Dapatkan waktu saat ini
+        $waktuSekarang = date('Y-m-d H:i:s');
+
+        // Bandingkan
+        if ($waktuBooking < $waktuSekarang) {
+            return redirect()->back()->withInput()->with('error', 'Anda tidak dapat membuat booking untuk waktu yang sudah lewat.');
+        }
+
+        // --- LOGIKA VALIDASI JADWAL (dari sebelumnya, tetap ada) ---
+
         $layananModel = new \App\Models\LayananModel();
         $layanan = $layananModel->find($layananId);
         if (!$layanan) {
@@ -66,11 +80,9 @@ class BookingController extends BaseController
         }
         $durasi = $layanan->durasi_menit;
 
-        // 2. Panggil metode pengecekan dari model
         $bookingModel = new BookingModel();
         $isAvailable = $bookingModel->isScheduleAvailable($kapsterId, $tanggal, $jam, $durasi);
 
-        // 3. Jika jadwal tidak tersedia, kembalikan dengan pesan error
         if (!$isAvailable) {
             return redirect()->back()->withInput()->with('error', 'Maaf, jadwal pada tanggal dan jam tersebut untuk kapster yang dipilih sudah tidak tersedia. Silakan pilih waktu lain.');
         }

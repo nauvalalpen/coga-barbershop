@@ -8,6 +8,10 @@
             <div class="card bg-dark text-white">
                 <div class="card-body p-5">
                     <h2 class="text-center mb-4">Pilih Layanan & Jadwal</h2>
+                    <?php if (session()->get('error')): ?>
+                        <div class="alert alert-danger"><?= session('error') ?></div>
+                    <?php endif; ?>
+
                     <?php if (session()->get('errors')): ?>
                         <div class="alert alert-danger"><?= implode('<br>', session('errors')) ?></div>
                     <?php endif; ?>
