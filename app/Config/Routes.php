@@ -19,6 +19,7 @@ $routes->post('/verify-email', 'AuthController::verifyCode');
 $routes->get('/', 'Home::index', ['filter' => 'pelanggan']);
 $routes->get('/kapsters', 'KapsterController::index');
 $routes->get('/layanan', 'LayananController::index');
+$routes->get('/galeri/(:num)', 'GaleriController::show/$1');
 $routes->get('/galeri', 'GaleriController::index');
 
 //Contact Us

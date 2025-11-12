@@ -9,6 +9,17 @@ Manajemen Galeri
 <?= $this->endSection() ?>
 
 <?= $this->section('content') ?>
+<style>
+    /* CSS untuk membatasi lebar kolom deskripsi */
+    .table-description {
+        max-width: 400px;
+        /* Atur lebar maksimum yang Anda inginkan */
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+    }
+</style>
+
 <div class="card" style="background-color: var(--light-dark-bg); border: 1px solid var(--border-color); border-radius:0;">
     <div class="card-header d-flex justify-content-between align-items-center" style="border-bottom: 1px solid var(--border-color);">
         <h5 class="mb-0">Daftar Gambar Galeri</h5>
@@ -26,9 +37,9 @@ Manajemen Galeri
                 <thead>
                     <tr>
                         <th scope="col" style="width: 15%;">Gambar</th>
-                        <th scope="col">Judul</th>
+                        <th scope="col" style="width: 20%;">Judul</th>
                         <th scope="col">Deskripsi</th>
-                        <th scope="col" class="text-end">Aksi</th>
+                        <th scope="col" style="width: 15%;" class="text-end">Aksi</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -37,7 +48,12 @@ Manajemen Galeri
                             <tr>
                                 <td><img src="/uploads/galeri/<?= esc($item->url_gambar) ?>" alt="<?= esc($item->judul) ?>" width="100" style="object-fit: cover;"></td>
                                 <td><?= esc($item->judul) ?></td>
-                                <td><?= esc($item->deskripsi) ?></td>
+                                <!-- TERAPKAN CLASS CSS DI SINI -->
+                                <td>
+                                    <div class="table-description" title="<?= esc($item->deskripsi) ?>">
+                                        <?= esc($item->deskripsi) ?>
+                                    </div>
+                                </td>
                                 <td class="text-end">
                                     <button type="button" class="btn btn-sm btn-outline-light" data-bs-toggle="modal" data-bs-target="#formModal" data-url="/admin/galeri/edit/<?= $item->id ?>">
                                         <i class="fas fa-edit"></i>
@@ -60,19 +76,6 @@ Manajemen Galeri
     </div>
 </div>
 
-<!-- MODAL KOSONG UNTUK FORM -->
-<div class="modal fade" id="formModal" tabindex="-1" aria-labelledby="formModalLabel" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered">
-        <div class="modal-content" style="background-color: var(--light-dark-bg); border: 1px solid var(--border-color);">
-            <div class="modal-body p-0">
-                <!-- Konten form akan dimuat di sini -->
-                <div class="text-center p-5">
-                    <div class="spinner-border text-warning" role="status"><span class="visually-hidden">Loading...</span></div>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
 
 <!-- JavaScript untuk memuat konten ke dalam modal -->
 <script>

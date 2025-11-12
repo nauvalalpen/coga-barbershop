@@ -136,7 +136,7 @@ GALLERY
                                     echo strlen($deskripsi) > 80 ? substr($deskripsi, 0, 80) . '...' : $deskripsi;
                                     ?>
                                 </p>
-                                <a href="#" class="read-more mt-auto">Read More</a>
+                                <a href="/galeri/<?= $item->id ?>" class="read-more">Read More</a>
                             </div>
                         </div>
                     </div>
