@@ -10,126 +10,611 @@ Dashboard Overview
 
 <?= $this->section('content') ?>
 <style>
+    :root {
+        --gold-color: #d4af37;
+        --gold-hover: #f4d983;
+        --dark-bg: #0a0a0a;
+        --light-dark-bg: #141414;
+        --card-bg: #1a1a1a;
+        --text-muted: #a0a0a0;
+        --border-color: #2a2a2a;
+        --transition-smooth: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    /* Animations */
+    @keyframes fadeInUp {
+        from {
+            opacity: 0;
+            transform: translateY(30px);
+        }
+
+        to {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    }
+
+    @keyframes scaleIn {
+        from {
+            opacity: 0;
+            transform: scale(0.9);
+        }
+
+        to {
+            opacity: 1;
+            transform: scale(1);
+        }
+    }
+
+    @keyframes slideInRight {
+        from {
+            opacity: 0;
+            transform: translateX(30px);
+        }
+
+        to {
+            opacity: 1;
+            transform: translateX(0);
+        }
+    }
+
+    @keyframes pulse {
+
+        0%,
+        100% {
+            transform: scale(1);
+        }
+
+        50% {
+            transform: scale(1.05);
+        }
+    }
+
+    @keyframes countUp {
+        from {
+            opacity: 0;
+            transform: translateY(10px);
+        }
+
+        to {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    }
+
+    /* Stat Cards */
     .stat-card {
-        background-color: var(--light-dark-bg);
+        background: linear-gradient(145deg, var(--card-bg), var(--light-dark-bg));
         border: 1px solid var(--border-color);
-        border-left-width: 5px;
-        border-radius: 0;
-        transition: border-color 0.3s ease;
+        border-left-width: 4px;
+        border-radius: 12px;
+        transition: var(--transition-smooth);
+        position: relative;
+        overflow: hidden;
+        animation: fadeInUp 0.6s ease-out;
+    }
+
+    .stat-card::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        right: 0;
+        width: 150px;
+        height: 150px;
+        background: radial-gradient(circle, rgba(212, 175, 55, 0.05) 0%, transparent 70%);
+        border-radius: 50%;
+        transform: translate(30%, -30%);
+        transition: var(--transition-smooth);
+    }
+
+    .stat-card:hover::before {
+        transform: translate(30%, -30%) scale(1.5);
     }
 
     .stat-card:hover {
-        border-color: var(--gold-color) !important;
+        transform: translateY(-8px);
+        box-shadow: 0 15px 40px rgba(212, 175, 55, 0.2);
+        border-left-color: var(--gold-color);
     }
 
     .stat-card .card-body {
-        padding: 1.5rem;
+        padding: 1.75rem;
+        position: relative;
+        z-index: 1;
     }
 
     .stat-card-icon {
-        font-size: 3rem;
-        opacity: 0.2;
-        transition: opacity 0.3s ease;
+        font-size: 3.5rem;
+        opacity: 0.15;
+        transition: var(--transition-smooth);
+        position: absolute;
+        right: 20px;
+        top: 50%;
+        transform: translateY(-50%);
     }
 
     .stat-card:hover .stat-card-icon {
-        opacity: 0.5;
+        opacity: 0.25;
+        transform: translateY(-50%) scale(1.1) rotate(5deg);
     }
 
-    .stat-card .h2 {
+    .stat-card .stat-label {
+        font-size: 0.8rem;
+        text-transform: uppercase;
+        letter-spacing: 1.5px;
+        color: var(--text-muted);
+        font-weight: 600;
+        margin-bottom: 12px;
+    }
+
+    .stat-card .stat-value {
         font-family: 'Playfair Display', serif;
+        font-size: 2.5rem;
+        font-weight: 700;
+        margin-bottom: 8px;
+        line-height: 1;
+        animation: countUp 0.8s ease-out;
     }
 
+    .stat-card .stat-change {
+        font-size: 0.85rem;
+        display: inline-flex;
+        align-items: center;
+        gap: 5px;
+        padding: 4px 10px;
+        border-radius: 20px;
+        font-weight: 500;
+    }
+
+    .stat-change.positive {
+        color: #28a745;
+        background: rgba(40, 167, 69, 0.1);
+    }
+
+    .stat-change.negative {
+        color: #dc3545;
+        background: rgba(220, 53, 69, 0.1);
+    }
+
+    /* Card Variants */
     .stat-card.card-gold {
         border-left-color: var(--gold-color);
     }
 
-    .stat-card.card-light {
-        border-left-color: #eee;
+    .stat-card.card-gold .stat-value {
+        color: var(--gold-color);
+    }
+
+    .stat-card.card-primary {
+        border-left-color: #4a9eff;
+    }
+
+    .stat-card.card-primary .stat-value {
+        color: #4a9eff;
+    }
+
+    .stat-card.card-success {
+        border-left-color: #28a745;
+    }
+
+    .stat-card.card-success .stat-value {
+        color: #28a745;
+    }
+
+    .stat-card.card-info {
+        border-left-color: #17a2b8;
+    }
+
+    .stat-card.card-info .stat-value {
+        color: #17a2b8;
+    }
+
+    /* Welcome Card */
+    .welcome-card {
+        background: linear-gradient(135deg, var(--card-bg) 0%, var(--light-dark-bg) 100%);
+        border: 1px solid var(--border-color);
+        border-radius: 12px;
+        padding: 2.5rem;
+        position: relative;
+        overflow: hidden;
+        animation: scaleIn 0.6s ease-out;
+    }
+
+    .welcome-card::before {
+        content: '✂️';
+        position: absolute;
+        font-size: 15rem;
+        opacity: 0.02;
+        top: 50%;
+        right: -5%;
+        transform: translateY(-50%) rotate(-15deg);
+    }
+
+    .welcome-card-content {
+        position: relative;
+        z-index: 1;
+    }
+
+    .welcome-title {
+        font-family: 'Playfair Display', serif;
+        font-size: 2rem;
+        font-weight: 700;
+        margin-bottom: 15px;
+        color: #fff;
+    }
+
+    .welcome-title::after {
+        content: '';
+        display: block;
+        width: 80px;
+        height: 3px;
+        background: var(--gold-color);
+        margin-top: 15px;
+    }
+
+    .welcome-text {
+        color: var(--text-muted);
+        font-size: 1.05rem;
+        line-height: 1.7;
+        margin-bottom: 20px;
+    }
+
+    .role-badge {
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        background: rgba(212, 175, 55, 0.1);
+        border: 1px solid var(--gold-color);
+        color: var(--gold-color);
+        padding: 10px 20px;
+        border-radius: 50px;
+        font-weight: 600;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+        font-size: 0.85rem;
+    }
+
+    /* Quick Actions */
+    .quick-actions {
+        margin-top: 2rem;
+    }
+
+    .quick-action-btn {
+        display: inline-flex;
+        align-items: center;
+        gap: 10px;
+        background: transparent;
+        border: 2px solid var(--border-color);
+        color: #fff;
+        padding: 12px 24px;
+        border-radius: 8px;
+        text-decoration: none;
+        font-weight: 600;
+        transition: var(--transition-smooth);
+        margin-right: 12px;
+        margin-bottom: 12px;
+    }
+
+    .quick-action-btn:hover {
+        border-color: var(--gold-color);
+        color: var(--gold-color);
+        transform: translateY(-3px);
+        box-shadow: 0 8px 20px rgba(212, 175, 55, 0.2);
+    }
+
+    /* Recent Activity Section */
+    .activity-section {
+        margin-top: 2rem;
+    }
+
+    .section-title {
+        font-family: 'Playfair Display', serif;
+        font-size: 1.8rem;
+        font-weight: 700;
+        margin-bottom: 1.5rem;
+        color: #fff;
+        display: flex;
+        align-items: center;
+        gap: 15px;
+    }
+
+    .section-title::before {
+        content: '';
+        width: 4px;
+        height: 30px;
+        background: var(--gold-color);
+        border-radius: 2px;
+    }
+
+    .activity-card {
+        background: var(--card-bg);
+        border: 1px solid var(--border-color);
+        border-radius: 12px;
+        padding: 1.5rem;
+        margin-bottom: 1rem;
+        transition: var(--transition-smooth);
+        animation: slideInRight 0.6s ease-out;
+    }
+
+    .activity-card:hover {
+        border-color: var(--gold-color);
+        transform: translateX(5px);
+        box-shadow: 0 5px 20px rgba(212, 175, 55, 0.1);
+    }
+
+    .activity-item {
+        display: flex;
+        align-items: center;
+        gap: 15px;
+        padding: 15px 0;
+        border-bottom: 1px solid var(--border-color);
+    }
+
+    .activity-item:last-child {
+        border-bottom: none;
+    }
+
+    .activity-icon {
+        width: 45px;
+        height: 45px;
+        border-radius: 10px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 1.3rem;
+        flex-shrink: 0;
+    }
+
+    .activity-icon.booking {
+        background: rgba(74, 158, 255, 0.1);
+        color: #4a9eff;
+    }
+
+    .activity-icon.payment {
+        background: rgba(212, 175, 55, 0.1);
+        color: var(--gold-color);
+    }
+
+    .activity-icon.user {
+        background: rgba(40, 167, 69, 0.1);
+        color: #28a745;
+    }
+
+    .activity-details {
+        flex-grow: 1;
+    }
+
+    .activity-title {
+        color: #fff;
+        font-weight: 600;
+        margin-bottom: 4px;
+    }
+
+    .activity-time {
+        color: var(--text-muted);
+        font-size: 0.85rem;
+    }
+
+    /* Charts Section */
+    .chart-card {
+        background: var(--card-bg);
+        border: 1px solid var(--border-color);
+        border-radius: 12px;
+        padding: 1.5rem;
+        height: 100%;
+    }
+
+    .chart-title {
+        font-family: 'Playfair Display', serif;
+        font-size: 1.3rem;
+        font-weight: 700;
+        margin-bottom: 1.5rem;
+        color: #fff;
+    }
+
+    /* Responsive */
+    @media (max-width: 768px) {
+        .stat-card .stat-value {
+            font-size: 2rem;
+        }
+
+        .welcome-card {
+            padding: 1.5rem;
+        }
+
+        .welcome-title {
+            font-size: 1.5rem;
+        }
+
+        .quick-action-btn {
+            width: 100%;
+            justify-content: center;
+        }
     }
 </style>
 
-<!-- Baris Kartu Statistik -->
-<div class="row g-4">
-    <div class="col-lg-3 col-md-6">
-        <div class="card stat-card card-gold">
+<!-- Stats Row -->
+<div class="row g-4 mb-4">
+    <div class="col-xl-3 col-md-6">
+        <div class="stat-card card-gold">
             <div class="card-body">
-                <div class="row align-items-center">
-                    <div class="col">
-                        <h6 class="text-uppercase text-muted mb-2">Total Pendapatan</h6>
-                        <span class="h2 mb-0">Rp <?= number_format($total_pendapatan, 0, ',', '.') ?></span>
-                    </div>
-                    <div class="col-auto">
-                        <i class="fas fa-dollar-sign stat-card-icon"></i>
-                    </div>
+                <div class="stat-label">Total Revenue</div>
+                <div class="stat-value">Rp <?= number_format($total_pendapatan, 0, ',', '.') ?></div>
+                <div class="stat-change positive">
+                    <i class="fas fa-arrow-up"></i>
+                    <span>12.5%</span>
                 </div>
+                <i class="fas fa-coins stat-card-icon"></i>
             </div>
         </div>
     </div>
 
-    <div class="col-lg-3 col-md-6">
-        <div class="card stat-card card-light">
+    <div class="col-xl-3 col-md-6">
+        <div class="stat-card card-primary">
             <div class="card-body">
-                <div class="row align-items-center">
-                    <div class="col">
-                        <h6 class="text-uppercase text-muted mb-2">Total Transaksi</h6>
-                        <span class="h2 mb-0"><?= $jumlah_transaksi ?></span>
-                    </div>
-                    <div class="col-auto">
-                        <i class="fas fa-receipt stat-card-icon"></i>
-                    </div>
+                <div class="stat-label">Total Transactions</div>
+                <div class="stat-value"><?= $jumlah_transaksi ?></div>
+                <div class="stat-change positive">
+                    <i class="fas fa-arrow-up"></i>
+                    <span>8.3%</span>
                 </div>
+                <i class="fas fa-receipt stat-card-icon"></i>
             </div>
         </div>
     </div>
 
-    <div class="col-lg-3 col-md-6">
-        <div class="card stat-card card-light">
+    <div class="col-xl-3 col-md-6">
+        <div class="stat-card card-success">
             <div class="card-body">
-                <div class="row align-items-center">
-                    <div class="col">
-                        <h6 class="text-uppercase text-muted mb-2">Jumlah Pelanggan</h6>
-                        <span class="h2 mb-0"><?= $jumlah_pelanggan ?></span>
-                    </div>
-                    <div class="col-auto">
-                        <i class="fas fa-user-friends stat-card-icon"></i>
-                    </div>
+                <div class="stat-label">Total Customers</div>
+                <div class="stat-value"><?= $jumlah_pelanggan ?></div>
+                <div class="stat-change positive">
+                    <i class="fas fa-arrow-up"></i>
+                    <span>15.2%</span>
                 </div>
+                <i class="fas fa-users stat-card-icon"></i>
             </div>
         </div>
     </div>
 
-    <div class="col-lg-3 col-md-6">
-        <div class="card stat-card card-light">
+    <div class="col-xl-3 col-md-6">
+        <div class="stat-card card-info">
             <div class="card-body">
-                <div class="row align-items-center">
-                    <div class="col">
-                        <h6 class="text-uppercase text-muted mb-2">Jumlah Kapster</h6>
-                        <span class="h2 mb-0"><?= $jumlah_kapster ?></span>
-                    </div>
-                    <div class="col-auto">
-                        <i class="fas fa-cut stat-card-icon"></i>
-                    </div>
+                <div class="stat-label">Active Barbers</div>
+                <div class="stat-value"><?= $jumlah_kapster ?></div>
+                <div class="stat-change positive">
+                    <i class="fas fa-arrow-up"></i>
+                    <span>5.0%</span>
                 </div>
+                <i class="fas fa-cut stat-card-icon"></i>
             </div>
         </div>
     </div>
 </div>
 
-<hr class="my-4" style="border-color: var(--border-color);">
-
-<!-- Kartu Sambutan -->
-<div class="row">
+<!-- Welcome Section -->
+<div class="row mb-4">
     <div class="col-12">
-        <div class="card" style="background-color: var(--light-dark-bg); border: 1px solid var(--border-color); border-radius:0;">
-            <div class="card-header" style="border-bottom: 1px solid var(--border-color);">
-                <h5>Selamat Datang di Panel Admin</h5>
-            </div>
-            <div class="card-body">
-                <p>Gunakan menu navigasi di sebelah kiri untuk mengelola konten dan operasional Coga Barbershop.</p>
-                <p>Peran Anda saat ini: <strong style="color: var(--gold-color);"><?= esc(session()->get('role')) ?></strong></p>
+        <div class="welcome-card">
+            <div class="welcome-card-content">
+                <h2 class="welcome-title">Welcome to COGA Admin Panel</h2>
+                <p class="welcome-text">
+                    Manage your barbershop operations efficiently. Use the navigation menu to access different
+                    sections and manage bookings, services, gallery, and more.
+                </p>
+                <div class="mb-3">
+                    <div class="role-badge">
+                        <i class="fas fa-user-shield"></i>
+                        <span><?= esc(session()->get('role')) ?></span>
+                    </div>
+                </div>
+
+                <div class="quick-actions">
+                    <a href="/admin/bookings" class="quick-action-btn">
+                        <i class="fas fa-calendar-plus"></i>
+                        <span>New Booking</span>
+                    </a>
+                    <a href="/admin/layanan" class="quick-action-btn">
+                        <i class="fas fa-plus-circle"></i>
+                        <span>Add Service</span>
+                    </a>
+                    <a href="/admin/galeri" class="quick-action-btn">
+                        <i class="fas fa-image"></i>
+                        <span>Upload Gallery</span>
+                    </a>
+                </div>
             </div>
         </div>
     </div>
 </div>
+
+<!-- Activity Section -->
+<div class="activity-section">
+    <h3 class="section-title">Recent Activity</h3>
+
+    <div class="row g-4">
+        <div class="col-lg-6">
+            <div class="activity-card">
+                <div class="activity-item">
+                    <div class="activity-icon booking">
+                        <i class="fas fa-calendar-check"></i>
+                    </div>
+                    <div class="activity-details">
+                        <div class="activity-title">New booking received</div>
+                        <div class="activity-time">5 minutes ago</div>
+                    </div>
+                </div>
+
+                <div class="activity-item">
+                    <div class="activity-icon payment">
+                        <i class="fas fa-money-bill-wave"></i>
+                    </div>
+                    <div class="activity-details">
+                        <div class="activity-title">Payment completed - Rp 85,000</div>
+                        <div class="activity-time">15 minutes ago</div>
+                    </div>
+                </div>
+
+                <div class="activity-item">
+                    <div class="activity-icon user">
+                        <i class="fas fa-user-plus"></i>
+                    </div>
+                    <div class="activity-details">
+                        <div class="activity-title">New customer registered</div>
+                        <div class="activity-time">1 hour ago</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-lg-6">
+            <div class="chart-card">
+                <h4 class="chart-title">Quick Stats</h4>
+                <div class="row g-3">
+                    <div class="col-6">
+                        <div class="p-3 rounded" style="background: rgba(212, 175, 55, 0.1); border: 1px solid rgba(212, 175, 55, 0.2);">
+                            <div style="color: var(--text-muted); font-size: 0.85rem; margin-bottom: 5px;">Today's Bookings</div>
+                            <div style="font-size: 1.8rem; font-weight: 700; color: var(--gold-color);">12</div>
+                        </div>
+                    </div>
+                    <div class="col-6">
+                        <div class="p-3 rounded" style="background: rgba(74, 158, 255, 0.1); border: 1px solid rgba(74, 158, 255, 0.2);">
+                            <div style="color: var(--text-muted); font-size: 0.85rem; margin-bottom: 5px;">This Week</div>
+                            <div style="font-size: 1.8rem; font-weight: 700; color: #4a9eff;">48</div>
+                        </div>
+                    </div>
+                    <div class="col-6">
+                        <div class="p-3 rounded" style="background: rgba(40, 167, 69, 0.1); border: 1px solid rgba(40, 167, 69, 0.2);">
+                            <div style="color: var(--text-muted); font-size: 0.85rem; margin-bottom: 5px;">Completed</div>
+                            <div style="font-size: 1.8rem; font-weight: 700; color: #28a745;">156</div>
+                        </div>
+                    </div>
+                    <div class="col-6">
+                        <div class="p-3 rounded" style="background: rgba(220, 53, 69, 0.1); border: 1px solid rgba(220, 53, 69, 0.2);">
+                            <div style="color: var(--text-muted); font-size: 0.85rem; margin-bottom: 5px;">Pending</div>
+                            <div style="font-size: 1.8rem; font-weight: 700; color: #dc3545;">8</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        // Animate numbers on load
+        const statValues = document.querySelectorAll('.stat-value');
+        statValues.forEach((stat, index) => {
+            stat.style.animationDelay = `${index * 0.1}s`;
+        });
+
+        // Stagger card animations
+        const statCards = document.querySelectorAll('.stat-card');
+        statCards.forEach((card, index) => {
+            card.style.animationDelay = `${index * 0.1}s`;
+        });
+    });
+</script>
+
 <?= $this->endSection() ?>
