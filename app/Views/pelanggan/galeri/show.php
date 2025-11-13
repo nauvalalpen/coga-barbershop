@@ -4,9 +4,44 @@
 <?= esc($item->judul) ?>
 <?= $this->endSection() ?>
 
-<!-- We override the default hero section from the layout with an empty one -->
-<?= $this->section('main_hero') ?>
+<!-- This section provides the CUSTOM hero content for the detail page -->
+<?= $this->section('hero') ?>
+<div class="article-hero">
+    <div class="article-hero-bg"
+        style="background-image: url('/uploads/galeri/<?= esc($item->url_gambar) ?>');"
+        onError="this.style.backgroundImage='url(https://via.placeholder.com/1920x1080/1a1a1a/d4af37?text=Gallery+Image)';">
+    </div>
+    <div class="article-hero-overlay"></div>
+
+    <div class="article-hero-content">
+        <div class="article-category">Gallery Feature</div>
+        <h1 class="article-hero-title"><?= esc($item->judul) ?></h1>
+        <div class="article-hero-meta">
+            <div class="meta-item">
+                <i class="fas fa-calendar-alt"></i>
+                <span><?= date('F d, Y', strtotime($item->created_at)) ?></span>
+            </div>
+            <div class="meta-divider"></div>
+            <div class="meta-item">
+                <i class="fas fa-eye"></i>
+                <span><?= rand(150, 800) ?> Views</span>
+            </div>
+            <div class="meta-divider"></div>
+            <div class="meta-item">
+                <i class="fas fa-clock"></i>
+                <span>5 min read</span>
+            </div>
+        </div>
+    </div>
+
+    <div class="scroll-indicator">
+        <div class="mouse">
+            <div class="wheel"></div>
+        </div>
+    </div>
+</div>
 <?= $this->endSection() ?>
+
 
 <?= $this->section('content') ?>
 <style>
@@ -597,52 +632,10 @@
     }
 </style>
 
-<!-- Hero Section -->
-<div class="article-hero">
-    <div class="article-hero-bg"
-        style="background-image: url('/uploads/galeri/<?= esc($item->url_gambar) ?>');"
-        onError="this.style.backgroundImage='url(https://via.placeholder.com/1920x1080/1a1a1a/d4af37?text=Gallery+Image)';">
-    </div>
-    <div class="article-hero-overlay"></div>
-
-    <div class="article-hero-content">
-        <div class="article-category">Gallery Feature</div>
-        <h1 class="article-hero-title"><?= esc($item->judul) ?></h1>
-        <div class="article-hero-meta">
-            <div class="meta-item">
-                <i class="fas fa-calendar-alt"></i>
-                <span><?= date('F d, Y', strtotime($item->created_at)) ?></span>
-            </div>
-            <div class="meta-divider"></div>
-            <div class="meta-item">
-                <i class="fas fa-eye"></i>
-                <span><?= rand(150, 800) ?> Views</span>
-            </div>
-            <div class="meta-divider"></div>
-            <div class="meta-item">
-                <i class="fas fa-clock"></i>
-                <span>5 min read</span>
-            </div>
-        </div>
-    </div>
-
-    <div class="scroll-indicator">
-        <div class="mouse">
-            <div class="wheel"></div>
-        </div>
-    </div>
-</div>
-
 <!-- Article Body -->
 <div class="article-body">
     <div class="container">
         <div class="article-container">
-
-            <!-- Featured Image (Optional - if you want to show image again) -->
-            <!-- <div class="article-featured-img">
-                <img src="/uploads/galeri/<?= esc($item->url_gambar) ?>" alt="<?= esc($item->judul) ?>">
-            </div> -->
-
             <!-- Article Stats -->
             <div class="article-stats">
                 <div class="stat-item">

@@ -22,12 +22,26 @@
             --gold-color: #c59d5f;
             --dark-bg: #000000;
             --light-dark-bg: #111111;
+            --transition-smooth: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
         }
 
         body {
             background-color: var(--dark-bg);
             color: #ffffff;
             font-family: 'Roboto', sans-serif;
+        }
+
+        /* --- Animations --- */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
         }
 
         /* --- Navigation Bar --- */
@@ -85,38 +99,97 @@
             color: var(--dark-bg);
         }
 
-        /* --- Hero Section --- */
+        /* --- NEW, UPGRADED HERO SECTION --- */
         .hero-section {
-            height: 60vh;
-            background: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.9)), url('https://images.unsplash.com/photo-1599305445671-ac291c95aaa9?q=80&w=2069&auto=format&fit=crop');
+            padding: 120px 0 80px 0;
+            /* Adjusted padding */
+            min-height: 50vh;
+            background-color: var(--dark-bg);
+            background-image:
+                linear-gradient(rgba(0, 0, 0, 0.8), rgba(0, 0, 0, 0.95)),
+                url('https://images.unsplash.com/photo-1599305445671-ac291c95aaa9?q=80&w=2069&auto=format&fit=crop');
             background-size: cover;
             background-position: center;
+            background-attachment: fixed;
             display: flex;
             align-items: center;
             justify-content: center;
             text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        /* Golden shape separator at the bottom */
+        .hero-section::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            height: 1px;
+            background: linear-gradient(90deg, transparent, var(--gold-color), transparent);
+            opacity: 0.5;
+        }
+
+        .hero-content {
+            animation: fadeInUp 1s ease-out forwards;
         }
 
         .hero-title {
             font-family: 'Playfair Display', serif;
-            font-size: 4.5rem;
+            font-size: clamp(2.5rem, 5vw, 4.5rem);
+            /* Responsive font size */
             color: #ffffff;
             text-transform: uppercase;
+            text-shadow: 2px 2px 10px rgba(0, 0, 0, 0.7);
+            margin: 20px 0;
+            font-weight: 700;
+            letter-spacing: 2px;
         }
 
+        .hero-subtitle {
+            color: #a0a0a0;
+            font-size: 1.1rem;
+            max-width: 600px;
+            margin: 0 auto;
+            line-height: 1.8;
+            font-weight: 300;
+        }
+
+        /* Breadcrumbs styling */
+        .breadcrumb {
+            justify-content: center;
+            margin-bottom: 1rem;
+            --bs-breadcrumb-divider-color: var(--gold-color);
+            --bs-breadcrumb-item-active-color: #fff;
+        }
+
+        .breadcrumb-item {
+            text-transform: uppercase;
+            font-size: 0.8rem;
+            letter-spacing: 1px;
+        }
+
+        .breadcrumb-item a {
+            color: #a0a0a0;
+            text-decoration: none;
+            transition: var(--transition-smooth);
+        }
+
+        .breadcrumb-item a:hover {
+            color: var(--gold-color);
+        }
+
+
         /* --- Footer --- */
-        /* --- FOOTER BARU DENGAN LATAR BELAKANG PUTIH --- */
         .footer {
             background-color: #ffffff;
-            /* Latar belakang putih */
             padding: 80px 0;
             color: #555;
-            /* Teks abu-abu gelap */
         }
 
         .footer h4 {
             color: #000;
-            /* Judul hitam */
             font-family: 'Playfair Display', serif;
             margin-bottom: 20px;
             text-transform: uppercase;
@@ -141,7 +214,6 @@
 
         .footer .footer-contact-item h5 {
             color: #000;
-            /* Judul item hitam */
             font-size: 1rem;
             font-weight: bold;
         }
@@ -211,15 +283,14 @@
         </nav>
     </header>
 
-    <div class="hero-section">
-        <h1 class="hero-title"><?= $this->renderSection('page_header', true) ?? strtoupper($this->renderSection('title')) ?></h1>
-    </div>
+    <!-- This is the flexible hero slot. Child pages will fill this in. -->
+    <?= $this->renderSection('hero') ?>
 
     <main>
         <?= $this->renderSection('content') ?>
     </main>
 
-    <!-- FOOTER BARU -->
+    <!-- FOOTER -->
     <footer class="footer">
         <div class="container">
             <div class="row">

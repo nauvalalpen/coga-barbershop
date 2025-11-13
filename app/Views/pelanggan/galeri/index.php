@@ -8,6 +8,25 @@ Gallery
 OUR GALLERY
 <?= $this->endSection() ?>
 
+<?= $this->section('hero') ?>
+<div class="hero-section">
+    <div class="container">
+        <div class="hero-content">
+            <nav aria-label="breadcrumb">
+                <ol class="breadcrumb">
+                    <li class="breadcrumb-item"><a href="/">Home</a></li>
+                    <li class="breadcrumb-item active" aria-current="page">Contact Us</li>
+                </ol>
+            </nav>
+            <h1 class="hero-title">GALLERY</h1>
+            <p class="hero-subtitle">
+                Have a question or want to book an appointment? We'd love to hear from you.
+            </p>
+        </div>
+    </div>
+</div>
+<?= $this->endSection() ?>
+
 <?= $this->section('content') ?>
 <style>
     /* Root Variables */
