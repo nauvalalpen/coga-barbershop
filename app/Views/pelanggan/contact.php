@@ -665,8 +665,8 @@ CONTACT US
                             </div>
                             <h4>Address</h4>
                         </div>
-                        <p>304 North Cardinal St. Dorchester</p>
-                        <p>Center, MA 02124, United States</p>
+                        <p>Jln Dr M. Hatta 1D, RT IV No.01, Kota Padang</p>
+                        <p>Sumatera Barat 25127</p>
                     </div>
 
                     <div class="info-item">
@@ -676,7 +676,7 @@ CONTACT US
                             </div>
                             <h4>Email</h4>
                         </div>
-                        <p><a href="mailto:info@cogabarbershop.com">info@cogabarbershop.com</a></p>
+                        <p><a href="mailto:cogabarbershop@gmail.com">cogabarbershop@gmail.com</a></p>
                         <p><a href="mailto:contact@cogabarbershop.com">contact@cogabarbershop.com</a></p>
                     </div>
 
@@ -698,8 +698,8 @@ CONTACT US
                             </div>
                             <h4>Working Hours</h4>
                         </div>
-                        <p>Monday - Saturday: 9:00 AM - 8:00 PM</p>
-                        <p>Sunday: 10:00 AM - 5:00 PM</p>
+                        <p>Monday - Saturday: 11:00 AM - 10:00 PM</p>
+                        <p>Sunday: 10:00 AM - 11:00 PM</p>
                     </div>
 
                     <div class="social-links">

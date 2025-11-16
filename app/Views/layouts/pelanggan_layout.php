@@ -599,7 +599,7 @@
                                 <div class="icon"><i class="fas fa-map-marker-alt"></i></div>
                                 <div>
                                     <h5>Address</h5>
-                                    <p>304 North Cardinal St, Dorchester<br>Center, MA 02124</p>
+                                    <p>Jln Dr M. Hatta 1D, RT IV No.01, Kota Padang<br>Sumatera Barat 25127</p>
                                 </div>
                             </div>
                         </div>
@@ -608,7 +608,7 @@
                                 <div class="icon"><i class="fas fa-envelope"></i></div>
                                 <div>
                                     <h5>Email</h5>
-                                    <p>info@company.com</p>
+                                    <p>cogabarbershop@gmail.com</p>
                                 </div>
                             </div>
                         </div>
@@ -617,7 +617,7 @@
                                 <div class="icon"><i class="fas fa-phone"></i></div>
                                 <div>
                                     <h5>Phone</h5>
-                                    <p>(+63) 555 1212</p>
+                                    <p>081234565656</p>
                                 </div>
                             </div>
                         </div>
@@ -626,7 +626,7 @@
                                 <div class="icon"><i class="fas fa-clock"></i></div>
                                 <div>
                                     <h5>Working Hours</h5>
-                                    <p>Mon - Fri: 10am - 6pm<br>Sat - Sun: 10am - 6pm</p>
+                                    <p>Mon - Fri: 11am - 10pm<br>Sat - Sun: 10am - 11pm</p>
                                 </div>
                             </div>
                         </div>
