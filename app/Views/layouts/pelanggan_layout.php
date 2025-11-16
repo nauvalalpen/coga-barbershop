@@ -277,7 +277,8 @@
             position: fixed;
             bottom: 100px;
             right: 35px;
-            width: 380px;
+            width: 500px;
+            height: 600px;
             background: var(--light-dark-bg);
             border: 1px solid var(--border-color);
             border-radius: 15px;
@@ -289,6 +290,8 @@
             pointer-events: none;
             transform-origin: bottom right;
             transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            display: flex;
+            flex-direction: column;
         }
 
         .chatbot-window.show {
@@ -300,7 +303,9 @@
         .chatbot-header {
             background: linear-gradient(135deg, var(--gold-color), #f4d983);
             padding: 1rem;
-            text-align: center;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
             color: #000;
         }
 
@@ -308,6 +313,27 @@
             margin: 0;
             font-family: 'Playfair Display', serif;
             font-weight: 700;
+            flex-grow: 1;
+            text-align: center;
+        }
+
+        .chatbot-close-btn {
+            background: none;
+            border: none;
+            color: #000;
+            font-size: 1.5rem;
+            cursor: pointer;
+            padding: 0;
+            width: 30px;
+            height: 30px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: transform 0.2s ease;
+        }
+
+        .chatbot-close-btn:hover {
+            transform: scale(1.2);
         }
 
         .chat-area {
@@ -353,9 +379,9 @@
             padding: 12px 16px;
             border-radius: 18px;
             margin: 0;
-            max-width: 75%;
-            word-wrap: break-word;
-            white-space: pre-wrap;
+            max-width: 90%;
+            word-break: break-word;
+            overflow-wrap: break-word;
             line-height: 1.5;
         }
 
@@ -731,7 +757,7 @@
 
                             botMessageDiv.innerHTML = `
                                 <div class="avatar">C</div>
-                                <div style="background: #333; color: #fff; padding: 12px 16px; border-radius: 18px; border-top-left-radius: 4px; max-width: 75%; word-wrap: break-word;">${renderedContent}</div>
+                                <div style="background: #333; color: #fff; padding: 12px 16px; border-radius: 18px; border-top-left-radius: 4px; max-width: 90%; word-break: break-word; overflow-wrap: break-word; line-height: 1.5;">${renderedContent}</div>
                             `;
                             chatArea.appendChild(botMessageDiv);
                         } else {
