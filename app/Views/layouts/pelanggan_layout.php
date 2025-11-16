@@ -337,7 +337,7 @@
         }
 
         .chat-area {
-            height: 350px;
+            flex: 1;
             overflow-y: auto;
             padding: 20px;
             display: flex;
@@ -647,6 +647,9 @@
     <div class="chatbot-window">
         <div class="chatbot-header">
             <h5>Coga Assistant</h5>
+            <button class="chatbot-close-btn" id="chatbotCloseBtn">
+                <i class="fas fa-times"></i>
+            </button>
         </div>
         <div class="chat-area" id="chatArea">
             <!-- Pesan awal -->
@@ -683,6 +686,7 @@
         document.addEventListener('DOMContentLoaded', function() {
             const chatbotToggler = document.querySelector('.chatbot-toggler');
             const chatbotWindow = document.querySelector('.chatbot-window');
+            const chatbotCloseBtn = document.getElementById('chatbotCloseBtn');
             const sendBtn = document.getElementById('sendBtn');
             const chatInput = document.getElementById('chatInput');
             const chatArea = document.getElementById('chatArea');
@@ -690,6 +694,11 @@
             // Toggle chatbot window
             chatbotToggler.addEventListener('click', function() {
                 chatbotWindow.classList.toggle('show');
+            });
+
+            // Close chatbot window
+            chatbotCloseBtn.addEventListener('click', function() {
+                chatbotWindow.classList.remove('show');
             });
 
             // Send message on button click
