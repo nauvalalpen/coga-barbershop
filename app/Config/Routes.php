@@ -26,6 +26,9 @@ $routes->get('/galeri', 'GaleriController::index');
 $routes->get('/contact', 'Home::contact');
 $routes->post('/contact/send', 'Home::sendMessage');
 
+// Chatbot Routes
+$routes->post('/api/chatbot/message', 'ChatbotController::sendMessage');
+
 $routes->group('', ['filter' => 'auth'], static function ($routes) {
     $routes->get('booking/new', 'BookingController::new');
     $routes->post('booking/create', 'BookingController::create');

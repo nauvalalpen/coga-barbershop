@@ -230,11 +230,272 @@
             font-size: 0.9rem;
             color: #888;
         }
+
+        .chatbot {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            width: 128px;
+            height: 60px;
+            background-color: var(--gold-color);
+            border-radius: 16%;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--dark-bg);
+            font-size: 24px;
+            cursor: pointer;
+            transition: var(--transition-smooth);
+            z-index: 1000;
+        }
+
+        .chatbot-toggler {
+            position: fixed;
+            bottom: 30px;
+            right: 35px;
+            width: 60px;
+            height: 60px;
+            background: var(--gold-color);
+            color: #000;
+            border: none;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2rem;
+            cursor: pointer;
+            z-index: 999;
+            transition: transform 0.3s ease;
+        }
+
+        .chatbot-toggler:hover {
+            transform: scale(1.1);
+        }
+
+        .chatbot-window {
+            position: fixed;
+            bottom: 100px;
+            right: 35px;
+            width: 380px;
+            background: var(--light-dark-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+            overflow: hidden;
+            z-index: 1000;
+            transform: scale(0.5);
+            opacity: 0;
+            pointer-events: none;
+            transform-origin: bottom right;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .chatbot-window.show {
+            transform: scale(1);
+            opacity: 1;
+            pointer-events: auto;
+        }
+
+        .chatbot-header {
+            background: linear-gradient(135deg, var(--gold-color), #f4d983);
+            padding: 1rem;
+            text-align: center;
+            color: #000;
+        }
+
+        .chatbot-header h5 {
+            margin: 0;
+            font-family: 'Playfair Display', serif;
+            font-weight: 700;
+        }
+
+        .chat-area {
+            height: 350px;
+            overflow-y: auto;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+
+        .chat-message {
+            display: flex;
+            gap: 10px;
+            align-items: flex-start;
+        }
+
+        .chat-message.outgoing {
+            justify-content: flex-end;
+        }
+
+        .chat-message .avatar {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: var(--gold-color);
+            color: #000;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            flex-shrink: 0;
+        }
+
+        .chat-message.incoming .avatar {
+            background: #333;
+            color: var(--gold-color);
+        }
+
+        .chat-message p {
+            background: #333;
+            color: #fff;
+            padding: 12px 16px;
+            border-radius: 18px;
+            margin: 0;
+            max-width: 75%;
+            word-wrap: break-word;
+            white-space: pre-wrap;
+            line-height: 1.5;
+        }
+
+        .chat-message.outgoing p {
+            background: var(--gold-color);
+            color: #000;
+            border-top-right-radius: 4px;
+        }
+
+        .chat-message.incoming p {
+            border-top-left-radius: 4px;
+        }
+
+        .chat-input {
+            display: flex;
+            gap: 5px;
+            padding: 10px 20px;
+            border-top: 1px solid var(--border-color);
+        }
+
+        .chat-input textarea {
+            flex-grow: 1;
+            background: #333;
+            border: 1px solid #555;
+            border-radius: 6px;
+            color: #fff;
+            resize: none;
+            height: 55px;
+            padding: 15px;
+        }
+
+        .chat-input textarea:focus {
+            outline: none;
+            border-color: var(--gold-color);
+        }
+
+        .chat-input button {
+            background: var(--gold-color);
+            color: #000;
+            border: none;
+            width: 55px;
+            border-radius: 6px;
+            font-size: 1.5rem;
+        }
+
+        /* Markdown styling in chat messages */
+        .chat-message h1,
+        .chat-message h2,
+        .chat-message h3,
+        .chat-message h4,
+        .chat-message h5,
+        .chat-message h6 {
+            margin: 8px 0;
+            font-weight: bold;
+            color: #fff;
+        }
+
+        .chat-message h1 {
+            font-size: 1.3em;
+        }
+
+        .chat-message h2 {
+            font-size: 1.2em;
+        }
+
+        .chat-message h3 {
+            font-size: 1.1em;
+        }
+
+        .chat-message h4 {
+            font-size: 1em;
+        }
+
+        .chat-message ul,
+        .chat-message ol {
+            margin: 8px 0;
+            padding-left: 20px;
+            color: #fff;
+        }
+
+        .chat-message li {
+            margin: 4px 0;
+        }
+
+        .chat-message strong,
+        .chat-message b {
+            font-weight: bold;
+            color: #fff;
+        }
+
+        .chat-message em,
+        .chat-message i {
+            font-style: italic;
+        }
+
+        .chat-message code {
+            background: #222;
+            color: #ffa500;
+            padding: 2px 6px;
+            border-radius: 3px;
+            font-family: 'Courier New', monospace;
+            font-size: 0.9em;
+        }
+
+        .chat-message pre {
+            background: #222;
+            color: #fff;
+            padding: 10px;
+            border-radius: 6px;
+            overflow-x: auto;
+            font-family: 'Courier New', monospace;
+            font-size: 0.85em;
+            margin: 8px 0;
+        }
+
+        .chat-message a {
+            color: #ffa500;
+            text-decoration: none;
+        }
+
+        .chat-message a:hover {
+            text-decoration: underline;
+        }
+
+        .chat-message blockquote {
+            border-left: 3px solid var(--gold-color);
+            padding-left: 10px;
+            margin: 8px 0;
+            color: #ccc;
+        }
+
+        .chat-message hr {
+            border: none;
+            border-top: 1px solid #555;
+            margin: 8px 0;
+        }
     </style>
 </head>
 
 <body data-bs-theme="dark">
-
     <header>
         <nav class="navbar navbar-expand-lg fixed-top">
             <div class="container">
@@ -352,8 +613,36 @@
         </div>
     </footer>
 
+    <button class="chatbot-toggler">
+        <i class="fas fa-comment-dots"></i>
+    </button>
+
+    <!-- Jendela Chatbot -->
+    <div class="chatbot-window">
+        <div class="chatbot-header">
+            <h5>Coga Assistant</h5>
+        </div>
+        <div class="chat-area" id="chatArea">
+            <!-- Pesan awal -->
+            <div class="chat-message incoming">
+                <div class="avatar">C</div>
+                <p>Halo! Selamat datang di Coga Barbershop. Ada yang bisa saya bantu?</p>
+            </div>
+            <div class="chat-message incoming">
+                <div class="avatar">C</div>
+                <p>Anda bisa menanyakan tentang layanan, harga, atau cara booking.</p>
+            </div>
+        </div>
+        <div class="chat-input">
+            <textarea id="chatInput" placeholder="Ketik pesan Anda..." required></textarea>
+            <button id="sendBtn"><i class="fas fa-paper-plane"></i></button>
+        </div>
+    </div>
+
     <!-- Bootstrap JS Bundle -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/dompurify/dist/purify.min.js"></script>
     <script>
         // JavaScript for sticky navbar
         window.addEventListener('scroll', function() {
@@ -364,7 +653,130 @@
                 navbar.classList.remove('scrolled');
             }
         });
+
+        document.addEventListener('DOMContentLoaded', function() {
+            const chatbotToggler = document.querySelector('.chatbot-toggler');
+            const chatbotWindow = document.querySelector('.chatbot-window');
+            const sendBtn = document.getElementById('sendBtn');
+            const chatInput = document.getElementById('chatInput');
+            const chatArea = document.getElementById('chatArea');
+
+            // Toggle chatbot window
+            chatbotToggler.addEventListener('click', function() {
+                chatbotWindow.classList.toggle('show');
+            });
+
+            // Send message on button click
+            sendBtn.addEventListener('click', sendMessage);
+
+            // Send message on Enter key
+            chatInput.addEventListener('keypress', function(e) {
+                if (e.key === 'Enter' && !e.shiftKey) {
+                    e.preventDefault();
+                    sendMessage();
+                }
+            });
+
+            // Send message function
+            function sendMessage() {
+                const message = chatInput.value.trim();
+
+                if (message === '') return;
+
+                // Display user message
+                const userMessageDiv = document.createElement('div');
+                userMessageDiv.className = 'chat-message outgoing';
+                userMessageDiv.innerHTML = `<p>${escapeHtml(message)}</p>`;
+                chatArea.appendChild(userMessageDiv);
+
+                // Clear input
+                chatInput.value = '';
+                chatInput.style.height = '55px';
+
+                // Scroll to bottom
+                chatArea.scrollTop = chatArea.scrollHeight;
+
+                // Show loading indicator
+                const loadingDiv = document.createElement('div');
+                loadingDiv.className = 'chat-message incoming';
+                loadingDiv.innerHTML = `
+                    <div class="avatar">C</div>
+                    <p style="background: #555; color: #aaa;">Sedang memproses...</p>
+                `;
+                chatArea.appendChild(loadingDiv);
+                chatArea.scrollTop = chatArea.scrollHeight;
+
+                // Send message to backend
+                fetch('/api/chatbot/message', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                            'X-Requested-With': 'XMLHttpRequest'
+                        },
+                        body: JSON.stringify({
+                            message: message
+                        })
+                    })
+                    .then(response => response.json())
+                    .then(data => {
+                        loadingDiv.remove();
+
+                        if (data.success && data.message) {
+                            const botMessageDiv = document.createElement('div');
+                            botMessageDiv.className = 'chat-message incoming';
+
+                            // Parse markdown and sanitize HTML
+                            let renderedContent = marked.parse(data.message);
+                            renderedContent = DOMPurify.sanitize(renderedContent);
+
+                            botMessageDiv.innerHTML = `
+                                <div class="avatar">C</div>
+                                <div style="background: #333; color: #fff; padding: 12px 16px; border-radius: 18px; border-top-left-radius: 4px; max-width: 75%; word-wrap: break-word;">${renderedContent}</div>
+                            `;
+                            chatArea.appendChild(botMessageDiv);
+                        } else {
+                            const errorDiv = document.createElement('div');
+                            errorDiv.className = 'chat-message incoming';
+                            errorDiv.innerHTML = `
+                                <div class="avatar">C</div>
+                                <p>Maaf, terjadi kesalahan. Silakan coba lagi.</p>
+                            `;
+                            chatArea.appendChild(errorDiv);
+                        }
+
+                        chatArea.scrollTop = chatArea.scrollHeight;
+                    })
+                    .catch(error => {
+                        console.error('Error:', error);
+                        loadingDiv.remove();
+
+                        const errorDiv = document.createElement('div');
+                        errorDiv.className = 'chat-message incoming';
+                        errorDiv.innerHTML = `
+                            <div class="avatar">C</div>
+                            <p>Maaf, terjadi kesalahan jaringan. Silakan coba lagi.</p>
+                        `;
+                        chatArea.appendChild(errorDiv);
+                        chatArea.scrollTop = chatArea.scrollHeight;
+                    });
+            }
+
+            // Helper function to escape HTML
+            function escapeHtml(text) {
+                const div = document.createElement('div');
+                div.textContent = text;
+                return div.innerHTML;
+            }
+
+            // Auto-adjust textarea height
+            chatInput.addEventListener('input', function() {
+                this.style.height = '55px';
+                this.style.height = Math.min(this.scrollHeight, 120) + 'px';
+            });
+        });
     </script>
+
+
 </body>
 
 </html>
