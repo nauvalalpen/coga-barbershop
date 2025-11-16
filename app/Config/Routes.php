@@ -16,7 +16,7 @@ $routes->get('/verify-email', 'AuthController::showVerifyForm');
 $routes->post('/verify-email', 'AuthController::verifyCode');
 
 // Pelanggan Routes
-$routes->get('/', 'Home::index', ['filter' => 'pelanggan']);
+$routes->get('/', 'Home::index');
 $routes->get('/kapsters', 'KapsterController::index');
 $routes->get('/layanan', 'LayananController::index');
 $routes->get('/galeri/(:num)', 'GaleriController::show/$1');

@@ -266,11 +266,18 @@
                                 <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                                     <i class="fas fa-user"></i> <?= esc(session()->get('nama')) ?>
                                 </a>
-                                <ul class="dropdown-menu">
-                                    <li><a class="dropdown-item" href="/my-bookings">My Bookings</a></li>
-                                    <li><a class="dropdown-item" href="#">Profil Saya</a></li>
-                                    <li><a class="dropdown-item" href="/logout">Logout</a></li>
-                                </ul>
+                                <?php if (session()->get('role') == 'pelanggan'): ?>
+                                    <ul class="dropdown-menu">
+                                        <li><a class="dropdown-item" href="/my-bookings">My Bookings</a></li>
+                                        <li><a class="dropdown-item" href="#">Profil Saya</a></li>
+                                        <li><a class="dropdown-item" href="/logout">Logout</a></li>
+                                    </ul>
+                                <?php else: ?>
+                                    <ul class="dropdown-menu">
+                                        <li><a class="dropdown-item" href="/dashboard">Dashboard</a></li>
+                                        <li><a class="dropdown-item" href="/logout">Logout</a></li>
+                                    </ul>
+                                <?php endif; ?>
                             </li>
                         <?php else: ?>
                             <li class="nav-item">

@@ -62,9 +62,12 @@ Bookings Management
     }
 
     .filter-select {
-        background: rgba(255, 255, 255, 0.05);
-        border: 2px solid #333;
+        background: #333;
+        /* Warna latar belakang lebih gelap */
+        border: 2px solid var(--border-color);
+        /* Border lebih gelap */
         color: #fff;
+        /* Teks putih */
         padding: 8px 16px;
         border-radius: 6px;
         font-size: 0.9rem;
@@ -73,8 +76,15 @@ Bookings Management
 
     .filter-select:focus {
         border-color: var(--gold-color);
+        /* Border emas saat fokus */
         outline: none;
         box-shadow: 0 0 15px rgba(212, 175, 55, 0.2);
+    }
+
+    .filter-select option {
+        background: #1a1a1a;
+        /* Latar belakang option tetap gelap */
+        color: #fff;
     }
 
     /* Alert Styling */

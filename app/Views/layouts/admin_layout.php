@@ -89,6 +89,7 @@
             border-bottom: 1px solid var(--border-color);
             position: relative;
             overflow: hidden;
+            /* cursor: pointer; */
         }
 
         .sidebar-header::before {
@@ -339,6 +340,25 @@
             transform: scale(1.1);
         }
 
+        .unstyled-link {
+            all: unset;
+        }
+
+        .unstyled-link:visited,
+        .unstyled-link:hover,
+        .unstyled-link:active {
+            color: inherit;
+            /* Takes the color of its parent */
+            text-decoration: none;
+            /* Removes the underline */
+            cursor: text;
+            /* Optional: Shows a text cursor instead of a pointer */
+        }
+
+        .link-box {
+            cursor: pointer;
+        }
+
         /* Responsive Design */
         @media (max-width: 992px) {
             .sidebar {
@@ -449,7 +469,7 @@
     <div class="wrapper">
         <!-- Sidebar -->
         <nav class="sidebar" id="sidebar">
-            <div class="sidebar-header">
+            <div class="sidebar-header link-box" onclick="location.href='/'">
                 <h3 class="sidebar-logo">COGA</h3>
                 <p class="sidebar-subtitle">Admin Panel</p>
             </div>
