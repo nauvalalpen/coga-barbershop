@@ -46,6 +46,15 @@ Laporan Pendapatan Cukur
 <div class="card" style="background-color: var(--light-dark-bg); border: 1px solid var(--border-color); border-radius:0;">
     <div class="card-header" style="border-bottom: 1px solid var(--border-color);">
         <h5 class="mb-0">Hasil Laporan</h5>
+
+        <div>
+            <a href="<?= site_url('admin/laporan-cukur/export/pdf?' . http_build_query($filters)) ?>" class="btn btn-danger btn-sm">
+                <i class="fas fa-file-pdf"></i> Ekspor PDF
+            </a>
+            <a href="<?= site_url('admin/laporan-cukur/export/excel?' . http_build_query($filters)) ?>" class="btn btn-success btn-sm">
+                <i class="fas fa-file-excel"></i> Ekspor Excel
+            </a>
+        </div>
     </div>
     <div class="card-body">
         <div class="table-responsive">

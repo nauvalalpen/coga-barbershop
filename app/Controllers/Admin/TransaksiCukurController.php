@@ -6,6 +6,9 @@ use App\Controllers\BaseController;
 use App\Models\TransaksiCukurModel;
 use App\Models\LayananModel;
 use App\Models\KapsterModel;
+use Dompdf\Dompdf;
+use PhpOffice\PhpSpreadsheet\Spreadsheet;
+use PhpOffice\PhpSpreadsheet\Writer\Xlsx;
 
 class TransaksiCukurController extends BaseController
 {
@@ -160,5 +163,95 @@ class TransaksiCukurController extends BaseController
         $data['filters'] = $filters; // To show current filter values in the view
 
         return view('admin/transaksi_cukur/laporan', $data);
+    }
+
+    public function export($type)
+    {
+        $transaksiModel = new \App\Models\TransaksiCukurModel();
+
+        // Ambil filter yang sama dari URL (query string)
+        $filters = [
+            'kapster_id' => $this->request->getGet('kapster_id'),
+            'start_date' => $this->request->getGet('start_date'),
+            'end_date'   => $this->request->getGet('end_date'),
+        ];
+
+        $data['transaksi'] = $transaksiModel->getTransactions($filters);
+
+        if ($type === 'pdf') {
+            $this->exportPdf($data);
+        } elseif ($type === 'excel') {
+            $this->exportExcel($data);
+        } else {
+            return redirect()->back()->with('error', 'Tipe ekspor tidak valid.');
+        }
+    }
+
+    /**
+     * Private helper method to generate PDF.
+     */
+    private function exportPdf($data)
+    {
+        $filename = 'Laporan_Pendapatan_Cukur_' . date('Y-m-d') . '.pdf';
+
+        // Buat view khusus untuk PDF (HTML sederhana)
+        $html = view('admin/transaksi_cukur/laporan_pdf', $data);
+
+        // Inisialisasi dompdf
+        $dompdf = new Dompdf();
+        $dompdf->loadHtml($html);
+        $dompdf->setPaper('A4', 'landscape'); // Atur ukuran kertas
+        $dompdf->render();
+
+        // Output file PDF ke browser
+        $dompdf->stream($filename);
+    }
+
+    /**
+     * Private helper method to generate Excel.
+     */
+    private function exportExcel($data)
+    {
+        $spreadsheet = new Spreadsheet();
+        $sheet = $spreadsheet->getActiveSheet();
+
+        // Set header
+        $sheet->setCellValue('A1', 'Tanggal');
+        $sheet->setCellValue('B1', 'Kapster');
+        $sheet->setCellValue('C1', 'Layanan');
+        $sheet->setCellValue('D1', 'Harga');
+
+        // Isi data
+        $row = 2;
+        $total = 0;
+        foreach ($data['transaksi'] as $item) {
+            $sheet->setCellValue('A' . $row, date('d M Y, H:i', strtotime($item->created_at)));
+            $sheet->setCellValue('B' . $row, $item->nama_kapster);
+            $sheet->setCellValue('C' . $row, $item->nama_layanan);
+            $sheet->setCellValue('D' . $row, $item->harga_saat_transaksi);
+            $total += $item->harga_saat_transaksi;
+            $row++;
+        }
+
+        // Tambahkan total
+        $sheet->setCellValue('C' . ($row + 1), 'Total Pendapatan');
+        $sheet->setCellValue('D' . ($row + 1), $total);
+
+        // Format
+        $sheet->getStyle('A1:D1')->getFont()->setBold(true);
+        $sheet->getStyle('D' . ($row + 1))->getFont()->setBold(true);
+        $sheet->getColumnDimension('A')->setAutoSize(true);
+        $sheet->getColumnDimension('B')->setAutoSize(true);
+        $sheet->getColumnDimension('C')->setAutoSize(true);
+        $sheet->getColumnDimension('D')->setAutoSize(true);
+
+        $filename = 'Laporan_Pendapatan_Cukur_' . date('Y-m-d') . '.xlsx';
+
+        // Buat writer dan kirim ke browser
+        $writer = new Xlsx($spreadsheet);
+        header('Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
+        header('Content-Disposition: attachment; filename="' . urlencode($filename) . '"');
+        $writer->save('php://output');
+        exit();
     }
 }

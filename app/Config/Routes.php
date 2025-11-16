@@ -78,4 +78,5 @@ $routes->group('admin', ['filter' => 'admin'], static function ($routes) {
 
     // Route specifically for Admins to view the main report
     $routes->get('laporan-cukur', 'Admin\TransaksiCukurController::laporan', ['filter' => 'admin_only']);
+    $routes->get('laporan-cukur/export/(:alpha)', 'Admin\TransaksiCukurController::export/$1', ['filter' => 'admin_only']);
 });
