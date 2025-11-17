@@ -775,7 +775,7 @@
                                 <?php if (session()->get('role') == 'pelanggan'): ?>
                                     <ul class="dropdown-menu dropdown-menu-end">
                                         <li><a class="dropdown-item" href="/my-bookings"><i class="fas fa-calendar-check me-2"></i>My Bookings</a></li>
-                                        <li><a class="dropdown-item" href="/profile"><i class="fas fa-user-circle me-2"></i>My Profile</a></li>
+                                        <li><a class="dropdown-item" href="/my-profile"><i class="fas fa-user-circle me-2"></i>My Profile</a></li>
                                         <li>
                                             <hr class="dropdown-divider">
                                         </li>

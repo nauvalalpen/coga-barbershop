@@ -37,6 +37,8 @@ $routes->group('', ['filter' => 'auth'], static function ($routes) {
     $routes->get('booking/new', 'BookingController::new');
     $routes->post('booking/create', 'BookingController::create');
     $routes->get('my-bookings', 'BookingController::index');
+    $routes->get('my-profile', 'ProfileController::index');
+    $routes->post('my-profile/update', 'ProfileController::update');
 });
 
 // Admin & Kapster Routes (Protected)
