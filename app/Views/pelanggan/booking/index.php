@@ -98,6 +98,7 @@ Riwayat Booking Saya
         letter-spacing: 1px;
         font-size: 0.9rem;
         padding: 1rem;
+        background: rgba(0, 0, 0, 0.2);
     }
 
     .booking-table tbody tr {
@@ -110,7 +111,9 @@ Riwayat Booking Saya
 
     .booking-table td {
         vertical-align: middle;
+        color: var(--white-color);
         padding: 1.25rem 1rem;
+        background: rgba(0, 0, 0, 0.2);
     }
 
     /* Status Badges */
