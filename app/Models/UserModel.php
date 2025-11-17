@@ -12,7 +12,7 @@ class UserModel extends Model
     protected $returnType       = 'object';
     protected $useSoftDeletes   = false;
     protected $protectFields    = true;
-    protected $allowedFields    = ['nama', 'email', 'password', 'role', 'no_telpon', 'verification_code', 'verification_expires_at', 'verified_at'];
+    protected $allowedFields    = ['nama', 'email', 'password', 'role', 'no_telpon', 'verification_code', 'verification_expires_at', 'verified_at', 'reset_token', 'reset_expires_at'];
 
     protected bool $allowEmptyInserts = false;
     protected bool $updateOnlyChanged = true;

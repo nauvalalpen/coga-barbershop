@@ -532,7 +532,7 @@
                         <input type="checkbox" id="remember" name="remember">
                         <label for="remember">Remember me</label>
                     </div>
-                    <a href="#" class="forgot-link">Forgot Password?</a>
+                    <a href="/forgot-password" class="forgot-link">Forgot Password?</a>
                 </div>
 
                 <button type="submit" class="btn-submit" id="submitBtn">

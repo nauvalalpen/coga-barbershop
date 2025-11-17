@@ -14,6 +14,10 @@ $routes->get('/login', 'AuthController::showLoginForm');
 $routes->get('/register', 'AuthController::showRegisterForm');
 $routes->get('/verify-email', 'AuthController::showVerifyForm');
 $routes->post('/verify-email', 'AuthController::verifyCode');
+$routes->get('/forgot-password', 'AuthController::showForgotPasswordForm', ['filter' => 'noauth']);
+$routes->post('/forgot-password', 'AuthController::sendResetLink', ['filter' => 'noauth']);
+$routes->get('/reset-password', 'AuthController::showResetPasswordForm', ['filter' => 'noauth']);
+$routes->post('/reset-password', 'AuthController::resetPassword', ['filter' => 'noauth']);
 
 // Pelanggan Routes
 $routes->get('/', 'Home::index');

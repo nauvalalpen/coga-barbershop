@@ -230,4 +230,104 @@ class AuthController extends BaseController
 
         return redirect()->to('/login')->with('success', 'Akun Anda telah berhasil diverifikasi! Silakan login.');
     }
+
+    public function showForgotPasswordForm()
+    {
+        return view('auth/forgot_password');
+    }
+
+
+    public function sendResetLink()
+    {
+        $rules = ['email' => 'required|valid_email'];
+        if (! $this->validate($rules)) {
+            return redirect()->back()->withInput()->with('errors', $this->validator->getErrors());
+        }
+
+        $userModel = new \App\Models\UserModel();
+        $user = $userModel->where('email', $this->request->getPost('email'))->first();
+
+        // Jika user ditemukan
+        if ($user) {
+            $token = bin2hex(random_bytes(20)); // Buat token acak yang aman
+            $expiry = date('Y-m-d H:i:s', time() + (15 * 60)); // Link berlaku 15 menit
+
+            $userModel->update($user->id, [
+                'reset_token' => $token,
+                'reset_expires_at' => $expiry,
+            ]);
+
+            // Kirim email
+            $this->sendPasswordResetEmail($user->email, $token);
+        }
+
+        return redirect()->to('/forgot-password')->with('success', 'Jika email Anda terdaftar, kami telah mengirimkan link untuk mereset password.');
+    }
+
+    public function showResetPasswordForm()
+    {
+        $token = $this->request->getGet('token');
+
+        // Cek apakah token ada dan valid
+        $userModel = new \App\Models\UserModel();
+        $user = $userModel->where('reset_token', $token)->first();
+
+        if (!$user || time() > strtotime($user->reset_expires_at)) {
+            return redirect()->to('/forgot-password')->with('error', 'Link reset password tidak valid atau sudah kedaluwarsa.');
+        }
+
+        $data['token'] = $token;
+        return view('auth/reset_password', $data);
+    }
+
+
+    public function resetPassword()
+    {
+        $rules = [
+            'token' => 'required',
+            'password' => 'required|min_length[8]',
+            'pass_confirm' => 'required|matches[password]',
+        ];
+
+        if (! $this->validate($rules)) {
+            return redirect()->back()->withInput()->with('errors', $this->validator->getErrors());
+        }
+
+        $token = $this->request->getPost('token');
+
+        // Cek lagi apakah token valid
+        $userModel = new \App\Models\UserModel();
+        $user = $userModel->where('reset_token', $token)->first();
+
+        if (!$user || time() > strtotime($user->reset_expires_at)) {
+            return redirect()->to('/forgot-password')->with('error', 'Link reset password tidak valid atau sudah kedaluwarsa.');
+        }
+
+        // Update password dan hapus token reset
+        $userModel->update($user->id, [
+            'password' => password_hash($this->request->getPost('password'), PASSWORD_BCRYPT),
+            'reset_token' => null,
+            'reset_expires_at' => null,
+        ]);
+
+        return redirect()->to('/login')->with('success', 'Password Anda telah berhasil direset! Silakan login dengan password baru.');
+    }
+
+
+    private function sendPasswordResetEmail($emailAddress, $token)
+    {
+        $email = \Config\Services::email();
+        $email->setTo($emailAddress);
+        $email->setSubject('Reset Password Akun Coga Barbershop');
+
+        $resetLink = site_url('reset-password?token=' . $token);
+
+        $message = "<h1>Reset Password</h1>";
+        $message .= "<p>Kami menerima permintaan untuk mereset password akun Anda. Klik link di bawah ini untuk melanjutkan:</p>";
+        $message .= "<a href='{$resetLink}'>Reset Password Saya</a>";
+        $message .= "<p>Link ini hanya berlaku selama 15 menit. Jika Anda tidak merasa melakukan permintaan ini, abaikan email ini.</p>";
+
+        $email->setMessage($message);
+        $email->send();
+    }
 }
