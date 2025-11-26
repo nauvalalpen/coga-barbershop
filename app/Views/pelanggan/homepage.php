@@ -14,7 +14,7 @@ COGA BARBERSHOP
             <nav aria-label="breadcrumb">
                 <ol class="breadcrumb">
                     <li class="breadcrumb-item"><a href="/">Home</a></li>
-                    <li class="breadcrumb-item active" aria-current="page">Contact Us</li>
+                    <!-- <li class="breadcrumb-item active" aria-current="page">Book now</li> -->
                 </ol>
             </nav>
             <h1 class="hero-title">COGA BARBERSHOP</h1>
