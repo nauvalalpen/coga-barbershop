@@ -385,7 +385,7 @@
                     <label for="nama" class="form-label">Full Name</label>
                     <div class="input-wrapper">
                         <i class="input-icon fas fa-user"></i>
-                        <input type="text" class="form-control" name="nama" id="nama" value="<?= old('nama') ?>" placeholder="John Doe" required>
+                        <input type="text" class="form-control" name="nama" id="nama" value="<?= old('nama') ?>" placeholder="Coganers" required>
                     </div>
                 </div>
 

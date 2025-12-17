@@ -233,7 +233,7 @@
                     id="nama"
                     name="nama"
                     value="<?= old('nama') ?>"
-                    placeholder="John Doe"
+                    placeholder="Coganers"
                     required>
                 <div class="form-helper">
                     <i class="fas fa-info-circle"></i>
@@ -251,7 +251,7 @@
                     id="email"
                     name="email"
                     value="<?= old('email') ?>"
-                    placeholder="john@example.com"
+                    placeholder="coganers@example.com"
                     required>
                 <div class="form-helper">
                     <i class="fas fa-info-circle"></i>

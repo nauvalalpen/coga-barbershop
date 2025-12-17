@@ -29,6 +29,7 @@ class BookingModel extends Model
             bookings.tanggal_booking,
             bookings.jam_booking,
             bookings.status,
+            bookings.created_at,
             pelanggan.nama as nama_pelanggan,
             kapster_user.nama as nama_kapster,
             layanans.nama_layanan,

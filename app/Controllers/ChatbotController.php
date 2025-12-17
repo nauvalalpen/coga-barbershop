@@ -119,7 +119,7 @@ LOKASI:
 
 KONTAK:
 - Email: info@company.com
-- Phone: (+63) 555 1212
+- Phone: +62 813-7405-8839
 
 Instruksi:
 1. Jawab pertanyaan pelanggan tentang layanan, harga, jam operasional, dan lokasi dengan ramah

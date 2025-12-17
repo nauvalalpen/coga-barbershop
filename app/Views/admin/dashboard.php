@@ -434,15 +434,16 @@ Dashboard Overview
 </style>
 
 <!-- Stats Row -->
+<!-- Stats Row -->
 <div class="row g-4 mb-4">
     <div class="col-xl-3 col-md-6">
         <div class="stat-card card-gold">
             <div class="card-body">
-                <div class="stat-label">Total Revenue</div>
-                <div class="stat-value">Rp <?= number_format($total_pendapatan, 0, ',', '.') ?></div>
+                <div class="stat-label">Revenue (<?= $nama_bulan ?>)</div> <!-- Label dinamis -->
+                <div class="stat-value">Rp <?= number_format($pendapatan_bulan_ini, 0, ',', '.') ?></div>
                 <div class="stat-change positive">
-                    <i class="fas fa-arrow-up"></i>
-                    <span>12.5%</span>
+                    <i class="fas fa-calendar-day"></i>
+                    <span>This Month</span>
                 </div>
                 <i class="fas fa-coins stat-card-icon"></i>
             </div>
@@ -452,11 +453,11 @@ Dashboard Overview
     <div class="col-xl-3 col-md-6">
         <div class="stat-card card-primary">
             <div class="card-body">
-                <div class="stat-label">Total Transactions</div>
-                <div class="stat-value"><?= $jumlah_transaksi ?></div>
+                <div class="stat-label">Transactions (<?= $nama_bulan ?>)</div>
+                <div class="stat-value"><?= $transaksi_bulan_ini ?></div>
                 <div class="stat-change positive">
-                    <i class="fas fa-arrow-up"></i>
-                    <span>8.3%</span>
+                    <i class="fas fa-calendar-day"></i>
+                    <span>This Month</span>
                 </div>
                 <i class="fas fa-receipt stat-card-icon"></i>
             </div>
@@ -466,11 +467,11 @@ Dashboard Overview
     <div class="col-xl-3 col-md-6">
         <div class="stat-card card-success">
             <div class="card-body">
-                <div class="stat-label">Total Customers</div>
-                <div class="stat-value"><?= $jumlah_pelanggan ?></div>
+                <div class="stat-label">New Customers</div>
+                <div class="stat-value"><?= $pelanggan_baru_bulan_ini ?></div>
                 <div class="stat-change positive">
-                    <i class="fas fa-arrow-up"></i>
-                    <span>15.2%</span>
+                    <i class="fas fa-user-plus"></i>
+                    <span>Joined this month</span>
                 </div>
                 <i class="fas fa-users stat-card-icon"></i>
             </div>
@@ -483,8 +484,8 @@ Dashboard Overview
                 <div class="stat-label">Active Barbers</div>
                 <div class="stat-value"><?= $jumlah_kapster ?></div>
                 <div class="stat-change positive">
-                    <i class="fas fa-arrow-up"></i>
-                    <span>5.0%</span>
+                    <i class="fas fa-check-circle"></i>
+                    <span>Currently Active</span>
                 </div>
                 <i class="fas fa-cut stat-card-icon"></i>
             </div>
@@ -529,44 +530,43 @@ Dashboard Overview
 </div>
 
 <!-- Activity Section -->
+<!-- Activity Section -->
 <div class="activity-section">
     <h3 class="section-title">Recent Activity</h3>
 
     <div class="row g-4">
+        <!-- Kolom Kiri: Recent Activity List -->
         <div class="col-lg-6">
             <div class="activity-card">
-                <div class="activity-item">
-                    <div class="activity-icon booking">
-                        <i class="fas fa-calendar-check"></i>
-                    </div>
-                    <div class="activity-details">
-                        <div class="activity-title">New booking received</div>
-                        <div class="activity-time">5 minutes ago</div>
-                    </div>
-                </div>
-
-                <div class="activity-item">
-                    <div class="activity-icon payment">
-                        <i class="fas fa-money-bill-wave"></i>
-                    </div>
-                    <div class="activity-details">
-                        <div class="activity-title">Payment completed - Rp 85,000</div>
-                        <div class="activity-time">15 minutes ago</div>
-                    </div>
-                </div>
-
-                <div class="activity-item">
-                    <div class="activity-icon user">
-                        <i class="fas fa-user-plus"></i>
-                    </div>
-                    <div class="activity-details">
-                        <div class="activity-title">New customer registered</div>
-                        <div class="activity-time">1 hour ago</div>
-                    </div>
-                </div>
+                <?php if (!empty($recent_activities)): ?>
+                    <?php foreach ($recent_activities as $activity): ?>
+                        <div class="activity-item">
+                            <div class="activity-icon <?= $activity['color'] ?>">
+                                <i class="<?= $activity['icon'] ?>"></i>
+                            </div>
+                            <div class="activity-details">
+                                <div class="activity-title"><?= $activity['title'] ?></div>
+                                <div class="text-muted small"><?= $activity['desc'] ?></div>
+                                <div class="activity-time">
+                                    <?php
+                                    // Menggunakan fitur Time CodeIgniter untuk format "ago"
+                                    try {
+                                        echo \CodeIgniter\I18n\Time::parse($activity['time'])->humanize();
+                                    } catch (\Exception $e) {
+                                        echo $activity['time'];
+                                    }
+                                    ?>
+                                </div>
+                            </div>
+                        </div>
+                    <?php endforeach; ?>
+                <?php else: ?>
+                    <div class="p-4 text-center text-muted">Belum ada aktivitas terbaru.</div>
+                <?php endif; ?>
             </div>
         </div>
 
+        <!-- Kolom Kanan: Quick Stats -->
         <div class="col-lg-6">
             <div class="chart-card">
                 <h4 class="chart-title">Quick Stats</h4>
@@ -574,25 +574,33 @@ Dashboard Overview
                     <div class="col-6">
                         <div class="p-3 rounded" style="background: rgba(212, 175, 55, 0.1); border: 1px solid rgba(212, 175, 55, 0.2);">
                             <div style="color: var(--text-muted); font-size: 0.85rem; margin-bottom: 5px;">Today's Bookings</div>
-                            <div style="font-size: 1.8rem; font-weight: 700; color: var(--gold-color);">12</div>
+                            <div style="font-size: 1.8rem; font-weight: 700; color: var(--gold-color);">
+                                <?= $today_bookings ?>
+                            </div>
                         </div>
                     </div>
                     <div class="col-6">
                         <div class="p-3 rounded" style="background: rgba(74, 158, 255, 0.1); border: 1px solid rgba(74, 158, 255, 0.2);">
                             <div style="color: var(--text-muted); font-size: 0.85rem; margin-bottom: 5px;">This Week</div>
-                            <div style="font-size: 1.8rem; font-weight: 700; color: #4a9eff;">48</div>
+                            <div style="font-size: 1.8rem; font-weight: 700; color: #4a9eff;">
+                                <?= $week_bookings ?>
+                            </div>
                         </div>
                     </div>
                     <div class="col-6">
                         <div class="p-3 rounded" style="background: rgba(40, 167, 69, 0.1); border: 1px solid rgba(40, 167, 69, 0.2);">
                             <div style="color: var(--text-muted); font-size: 0.85rem; margin-bottom: 5px;">Completed</div>
-                            <div style="font-size: 1.8rem; font-weight: 700; color: #28a745;">156</div>
+                            <div style="font-size: 1.8rem; font-weight: 700; color: #28a745;">
+                                <?= $completed_total ?>
+                            </div>
                         </div>
                     </div>
                     <div class="col-6">
                         <div class="p-3 rounded" style="background: rgba(220, 53, 69, 0.1); border: 1px solid rgba(220, 53, 69, 0.2);">
-                            <div style="color: var(--text-muted); font-size: 0.85rem; margin-bottom: 5px;">Pending</div>
-                            <div style="font-size: 1.8rem; font-weight: 700; color: #dc3545;">8</div>
+                            <div style="color: var(--text-muted); font-size: 0.85rem; margin-bottom: 5px;">Pending (Confirmed)</div>
+                            <div style="font-size: 1.8rem; font-weight: 700; color: #dc3545;">
+                                <?= $pending_total ?>
+                            </div>
                         </div>
                     </div>
                 </div>

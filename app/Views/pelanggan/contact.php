@@ -687,8 +687,8 @@ CONTACT US
                             </div>
                             <h4>Phone</h4>
                         </div>
-                        <p><a href="tel:+1234567890">+1 (234) 567-890</a></p>
-                        <p><a href="tel:+1234567891">+1 (234) 567-891</a></p>
+                        <p><a href="tel:+1234567890">+62 813-7405-8839</a></p>
+                        <p><a href="tel:+1234567891">+62 813-7405-8839</a></p>
                     </div>
 
                     <div class="info-item">
@@ -759,7 +759,7 @@ CONTACT US
                                     name="name"
                                     id="name"
                                     value="<?= old('name') ?>"
-                                    placeholder="John Doe"
+                                    placeholder="Coganers"
                                     required>
                             </div>
 
@@ -770,7 +770,7 @@ CONTACT US
                                     name="email"
                                     id="email"
                                     value="<?= old('email') ?>"
-                                    placeholder="john@example.com"
+                                    placeholder="coganers@gmail.com"
                                     required>
                             </div>
 

@@ -843,7 +843,7 @@
                                 <div class="icon"><i class="fas fa-phone"></i></div>
                                 <div>
                                     <h5>Phone</h5>
-                                    <p>081234565656</p>
+                                    <p>+62 813-7405-8839</p>
                                 </div>
                             </div>
                         </div>
